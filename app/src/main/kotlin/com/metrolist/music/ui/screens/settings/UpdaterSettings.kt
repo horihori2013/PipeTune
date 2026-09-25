@@ -20,7 +20,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -44,6 +43,7 @@ import com.metrolist.music.constants.UpdateNotificationsEnabledKey
 import com.metrolist.music.ui.component.IconButton
 import com.metrolist.music.ui.component.Material3SettingsGroup
 import com.metrolist.music.ui.component.Material3SettingsItem
+import com.metrolist.music.ui.component.liquidglass.LiquidSwitch
 import com.metrolist.music.ui.utils.backToMain
 import com.metrolist.music.utils.Updater
 import com.metrolist.music.utils.rememberPreference
@@ -141,7 +141,7 @@ fun UpdaterScreen(
                             title = { Text(stringResource(R.string.check_for_updates)) },
                             icon = painterResource(R.drawable.update),
                             trailingContent = {
-                                Switch(
+                                LiquidSwitch(
                                     checked = checkForUpdates,
                                     onCheckedChange = onCheckForUpdatesChange,
                                 )
@@ -156,7 +156,7 @@ fun UpdaterScreen(
                                 title = { Text(stringResource(R.string.update_notifications)) },
                                 icon = painterResource(R.drawable.notification),
                                 trailingContent = {
-                                    Switch(
+                                    LiquidSwitch(
                                         checked = updateNotifications,
                                         onCheckedChange = onUpdateNotificationsChange,
                                     )

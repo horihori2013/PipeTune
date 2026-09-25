@@ -24,8 +24,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -53,6 +51,8 @@ import com.metrolist.music.constants.MediaSessionConstants
 import com.metrolist.music.ui.component.IconButton
 import com.metrolist.music.ui.component.Material3SettingsGroup
 import com.metrolist.music.ui.component.Material3SettingsItem
+import com.metrolist.music.ui.component.Material3SettingsToggle
+import com.metrolist.music.ui.component.liquidglass.LiquidSwitch
 import com.metrolist.music.ui.utils.backToMain
 import com.metrolist.music.utils.rememberPreference
 import kotlinx.coroutines.flow.map
@@ -206,7 +206,7 @@ fun AndroidAutoSettings(
                                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
                                 Spacer(Modifier.width(12.dp))
-                                Switch(
+                                LiquidSwitch(
                                     checked = enabled,
                                     onCheckedChange = { newValue ->
                                         sections = sections.map { (s, e) ->
@@ -214,15 +214,6 @@ fun AndroidAutoSettings(
                                         }
                                         onSectionsChange(serializeSections(sections))
                                     },
-                                    thumbContent = {
-                                        Icon(
-                                            painter = painterResource(
-                                                if (enabled) R.drawable.check else R.drawable.close
-                                            ),
-                                            contentDescription = null,
-                                            modifier = Modifier.size(SwitchDefaults.IconSize),
-                                        )
-                                    }
                                 )
                             }
                         },
@@ -302,26 +293,12 @@ fun AndroidAutoSettings(
         Material3SettingsGroup(
             title = stringResource(R.string.mixes),
             items = listOf(
-                Material3SettingsItem(
+                Material3SettingsToggle(
                     icon = painterResource(R.drawable.queue_music),
-                    title = { Text(stringResource(R.string.android_auto_youtube_playlists)) },
-                    description = { Text(stringResource(R.string.android_auto_youtube_playlists_desc)) },
-                    trailingContent = {
-                        Switch(
-                            checked = youtubePlaylistsEnabled,
-                            onCheckedChange = onYoutubePlaylistsChange,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        if (youtubePlaylistsEnabled) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SwitchDefaults.IconSize),
-                                )
-                            }
-                        )
-                    },
-                    onClick = { onYoutubePlaylistsChange(!youtubePlaylistsEnabled) }
+                    title = stringResource(R.string.android_auto_youtube_playlists),
+                    description = stringResource(R.string.android_auto_youtube_playlists_desc),
+                    checked = youtubePlaylistsEnabled,
+                    onCheckedChange = onYoutubePlaylistsChange,
                 )
             )
         )

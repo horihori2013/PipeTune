@@ -37,8 +37,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -75,6 +73,7 @@ import com.metrolist.music.ui.component.Material3MenuItemData
 import com.metrolist.music.ui.component.NewAction
 import com.metrolist.music.ui.component.NewActionGrid
 import com.metrolist.music.ui.component.TextFieldDialog
+import com.metrolist.music.ui.component.liquidglass.LiquidSwitch
 import com.metrolist.music.viewmodels.LyricsMenuViewModel
 import com.metrolist.music.constants.OpenRouterApiKey
 import com.metrolist.music.constants.DeeplApiKey
@@ -502,7 +501,7 @@ fun LyricsMenu(
                                     }
                                 },
                                 trailingContent = {
-                                    Switch(
+                                    LiquidSwitch(
                                         checked = hasTranslations,
                                         onCheckedChange = { newCheckedState ->
                                             if (newCheckedState) {
@@ -519,20 +518,6 @@ fun LyricsMenu(
                                                 }
                                             }
                                         },
-                                        thumbContent = {
-                                            Icon(
-                                                painter = painterResource(
-                                                    id = if (hasTranslations) R.drawable.check else R.drawable.close
-                                                ),
-                                                contentDescription = null,
-                                                modifier = Modifier.size(SwitchDefaults.IconSize)
-                                            )
-                                        },
-                                        colors = SwitchDefaults.colors(
-                                            uncheckedThumbColor = MaterialTheme.colorScheme.primaryContainer,
-                                            checkedThumbColor = MaterialTheme.colorScheme.onPrimary,
-                                            checkedTrackColor = MaterialTheme.colorScheme.primary
-                                        )
                                     )
                                 }
                             )
@@ -553,25 +538,11 @@ fun LyricsMenu(
                                 respectAgentPositioning = !respectAgentPositioning
                             },
                             trailingContent = {
-                                Switch(
+                                LiquidSwitch(
                                     checked = respectAgentPositioning,
                                     onCheckedChange = { newCheckedState ->
                                         respectAgentPositioning = newCheckedState
                                     },
-                                    thumbContent = {
-                                        Icon(
-                                            painter = painterResource(
-                                                id = if (respectAgentPositioning) R.drawable.check else R.drawable.close
-                                            ),
-                                            contentDescription = null,
-                                            modifier = Modifier.size(SwitchDefaults.IconSize)
-                                        )
-                                    },
-                                    colors = SwitchDefaults.colors(
-                                        uncheckedThumbColor = MaterialTheme.colorScheme.primaryContainer,
-                                        checkedThumbColor = MaterialTheme.colorScheme.onPrimary,
-                                        checkedTrackColor = MaterialTheme.colorScheme.primary
-                                    )
                                 )
                             }
                         )
@@ -591,25 +562,11 @@ fun LyricsMenu(
                                 showIntervalIndicator = !showIntervalIndicator
                             },
                             trailingContent = {
-                                Switch(
+                                LiquidSwitch(
                                     checked = showIntervalIndicator,
                                     onCheckedChange = { newCheckedState ->
                                         showIntervalIndicator = newCheckedState
                                     },
-                                    thumbContent = {
-                                        Icon(
-                                            painter = painterResource(
-                                                id = if (showIntervalIndicator) R.drawable.check else R.drawable.close
-                                            ),
-                                            contentDescription = null,
-                                            modifier = Modifier.size(SwitchDefaults.IconSize)
-                                        )
-                                    },
-                                    colors = SwitchDefaults.colors(
-                                        uncheckedThumbColor = MaterialTheme.colorScheme.primaryContainer,
-                                        checkedThumbColor = MaterialTheme.colorScheme.onPrimary,
-                                        checkedTrackColor = MaterialTheme.colorScheme.primary
-                                    )
                                 )
                             }
                         )
@@ -656,7 +613,7 @@ fun LyricsMenu(
                                 }
                             },
                             trailingContent = {
-                                Switch(
+                                LiquidSwitch(
                                     checked = isChecked,
                                     onCheckedChange = { newCheckedState ->
                                         isChecked = newCheckedState
@@ -666,20 +623,6 @@ fun LyricsMenu(
                                             }
                                         }
                                     },
-                                    thumbContent = {
-                                        Icon(
-                                            painter = painterResource(
-                                                id = if (isChecked) R.drawable.check else R.drawable.close
-                                            ),
-                                            contentDescription = null,
-                                            modifier = Modifier.size(SwitchDefaults.IconSize)
-                                        )
-                                    },
-                                    colors = SwitchDefaults.colors(
-                                        uncheckedThumbColor = MaterialTheme.colorScheme.primaryContainer,
-                                        checkedThumbColor = MaterialTheme.colorScheme.onPrimary,
-                                        checkedTrackColor = MaterialTheme.colorScheme.primary
-                                    )
                                 )
                             }
                         )

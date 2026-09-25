@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -30,8 +29,6 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -92,8 +89,10 @@ import com.metrolist.music.ui.component.EnumDialog
 import com.metrolist.music.ui.component.IconButton
 import com.metrolist.music.ui.component.Material3SettingsGroup
 import com.metrolist.music.ui.component.Material3SettingsItem
+import com.metrolist.music.ui.component.Material3SettingsToggle
 import com.metrolist.music.ui.component.DraggableLyricsProviderItem
 import com.metrolist.music.ui.component.DraggableLyricsProviderList
+import com.metrolist.music.ui.component.liquidglass.LiquidSwitch
 import com.metrolist.music.lyrics.LyricsProviderRegistry
 import com.metrolist.music.ui.utils.backToMain
 import com.metrolist.music.utils.rememberEnumPreference
@@ -251,7 +250,7 @@ fun ContentSettings(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(stringResource(R.string.enable_authentication))
-                        Switch(
+                        LiquidSwitch(
                             checked = authEnabled,
                             onCheckedChange = {
                                 authEnabled = it
@@ -393,18 +392,9 @@ fun ContentSettings(
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
-                        Switch(
+                        LiquidSwitch(
                             checked = enableLrclib,
                             onCheckedChange = onEnableLrclibChange,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (enableLrclib) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SwitchDefaults.IconSize)
-                                )
-                            }
                         )
                     }
                     Row(
@@ -422,18 +412,9 @@ fun ContentSettings(
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
-                        Switch(
+                        LiquidSwitch(
                             checked = enableKugou,
                             onCheckedChange = onEnableKugouChange,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (enableKugou) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SwitchDefaults.IconSize)
-                                )
-                            }
                         )
                     }
                     Row(
@@ -451,18 +432,9 @@ fun ContentSettings(
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
-                        Switch(
+                        LiquidSwitch(
                             checked = enableBetterLyrics,
                             onCheckedChange = onEnableBetterLyricsChange,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (enableBetterLyrics) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SwitchDefaults.IconSize)
-                                )
-                            }
                         )
                     }
                     Row(
@@ -480,18 +452,9 @@ fun ContentSettings(
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
-                        Switch(
+                        LiquidSwitch(
                             checked = enablePaxsenix,
                             onCheckedChange = onEnablePaxsenixChange,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (enablePaxsenix) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SwitchDefaults.IconSize)
-                                )
-                            }
                         )
                     }
                     Row(
@@ -509,18 +472,9 @@ fun ContentSettings(
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
-                        Switch(
+                        LiquidSwitch(
                             checked = enableLyricsPlus,
                             onCheckedChange = onEnableLyricsPlusChange,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (enableLyricsPlus) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SwitchDefaults.IconSize)
-                                )
-                            }
                         )
                     }
                     Row(
@@ -538,18 +492,9 @@ fun ContentSettings(
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
-                        Switch(
+                        LiquidSwitch(
                             checked = enableZemer,
                             onCheckedChange = onEnableZemerChange,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (enableZemer) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SwitchDefaults.IconSize)
-                                )
-                            }
                         )
                     }
                     Column(modifier = Modifier.padding(2.dp)) {
@@ -766,65 +711,23 @@ fun ContentSettings(
                     },
                     onClick = { showContentCountryDialog = true }
                 ),
-                Material3SettingsItem(
+                Material3SettingsToggle(
                     icon = painterResource(R.drawable.explicit),
-                    title = { Text(stringResource(R.string.hide_explicit)) },
-                    trailingContent = {
-                        Switch(
-                            checked = hideExplicit,
-                            onCheckedChange = onHideExplicitChange,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (hideExplicit) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SwitchDefaults.IconSize)
-                                )
-                            }
-                        )
-                    },
-                    onClick = { onHideExplicitChange(!hideExplicit) }
+                    title = stringResource(R.string.hide_explicit),
+                    checked = hideExplicit,
+                    onCheckedChange = onHideExplicitChange,
                 ),
-                Material3SettingsItem(
+                Material3SettingsToggle(
                     icon = painterResource(R.drawable.slow_motion_video),
-                    title = { Text(stringResource(R.string.hide_video_songs)) },
-                    trailingContent = {
-                        Switch(
-                            checked = hideVideoSongs,
-                            onCheckedChange = onHideVideoSongsChange,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (hideVideoSongs) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SwitchDefaults.IconSize)
-                                )
-                            }
-                        )
-                    },
-                    onClick = { onHideVideoSongsChange(!hideVideoSongs) }
+                    title = stringResource(R.string.hide_video_songs),
+                    checked = hideVideoSongs,
+                    onCheckedChange = onHideVideoSongsChange,
                 ),
-                Material3SettingsItem(
+                Material3SettingsToggle(
                     icon = painterResource(R.drawable.hide_image),
-                    title = { Text(stringResource(R.string.hide_youtube_shorts)) },
-                    trailingContent = {
-                        Switch(
-                            checked = hideYoutubeShorts,
-                            onCheckedChange = onHideYoutubeShortsChange,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (hideYoutubeShorts) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SwitchDefaults.IconSize)
-                                )
-                            }
-                        )
-                    },
-                    onClick = { onHideYoutubeShortsChange(!hideYoutubeShorts) }
+                    title = stringResource(R.string.hide_youtube_shorts),
+                    checked = hideYoutubeShorts,
+                    onCheckedChange = onHideYoutubeShortsChange,
                 )
             )
         )
@@ -855,65 +758,23 @@ fun ContentSettings(
         Material3SettingsGroup(
             title = stringResource(R.string.artist_page_settings),
             items = listOf(
-                Material3SettingsItem(
+                Material3SettingsToggle(
                     icon = painterResource(R.drawable.info),
-                    title = { Text(stringResource(R.string.show_artist_description)) },
-                    trailingContent = {
-                        Switch(
-                            checked = showArtistDescription,
-                            onCheckedChange = onShowArtistDescriptionChange,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (showArtistDescription) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SwitchDefaults.IconSize)
-                                )
-                            }
-                        )
-                    },
-                    onClick = { onShowArtistDescriptionChange(!showArtistDescription) }
+                    title = stringResource(R.string.show_artist_description),
+                    checked = showArtistDescription,
+                    onCheckedChange = onShowArtistDescriptionChange,
                 ),
-                Material3SettingsItem(
+                Material3SettingsToggle(
                     icon = painterResource(R.drawable.person),
-                    title = { Text(stringResource(R.string.show_artist_subscriber_count)) },
-                    trailingContent = {
-                        Switch(
-                            checked = showArtistSubscriberCount,
-                            onCheckedChange = onShowArtistSubscriberCountChange,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (showArtistSubscriberCount) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SwitchDefaults.IconSize)
-                                )
-                            }
-                        )
-                    },
-                    onClick = { onShowArtistSubscriberCountChange(!showArtistSubscriberCount) }
+                    title = stringResource(R.string.show_artist_subscriber_count),
+                    checked = showArtistSubscriberCount,
+                    onCheckedChange = onShowArtistSubscriberCountChange,
                 ),
-                Material3SettingsItem(
+                Material3SettingsToggle(
                     icon = painterResource(R.drawable.person),
-                    title = { Text(stringResource(R.string.show_artist_monthly_listeners)) },
-                    trailingContent = {
-                        Switch(
-                            checked = showMonthlyListeners,
-                            onCheckedChange = onShowMonthlyListenersChange,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (showMonthlyListeners) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SwitchDefaults.IconSize)
-                                )
-                            }
-                        )
-                    },
-                    onClick = { onShowMonthlyListenersChange(!showMonthlyListeners) }
+                    title = stringResource(R.string.show_artist_monthly_listeners),
+                    checked = showMonthlyListeners,
+                    onCheckedChange = onShowMonthlyListenersChange,
                 )
             )
         )
@@ -957,25 +818,11 @@ fun ContentSettings(
             title = stringResource(R.string.proxy),
             items = buildList {
                 add(
-                    Material3SettingsItem(
+                    Material3SettingsToggle(
                         icon = painterResource(R.drawable.wifi_proxy),
-                        title = { Text(stringResource(R.string.enable_proxy)) },
-                        trailingContent = {
-                            Switch(
-                                checked = proxyEnabled,
-                                onCheckedChange = onProxyEnabledChange,
-                                thumbContent = {
-                                    Icon(
-                                        painter = painterResource(
-                                            id = if (proxyEnabled) R.drawable.check else R.drawable.close
-                                        ),
-                                        contentDescription = null,
-                                        modifier = Modifier.size(SwitchDefaults.IconSize)
-                                    )
-                                }
-                            )
-                        },
-                        onClick = { onProxyEnabledChange(!proxyEnabled) }
+                        title = stringResource(R.string.enable_proxy),
+                        checked = proxyEnabled,
+                        onCheckedChange = onProxyEnabledChange,
                     )
                 )
                 if (proxyEnabled) {
@@ -988,6 +835,20 @@ fun ContentSettings(
                     )
                 }
             }
+        )
+
+        Spacer(modifier = Modifier.height(27.dp))
+
+        Material3SettingsGroup(
+            title = stringResource(R.string.wireguard),
+            items = listOf(
+                Material3SettingsItem(
+                    icon = painterResource(R.drawable.wifi_proxy),
+                    title = { Text(stringResource(R.string.wireguard)) },
+                    description = { Text(stringResource(R.string.wireguard_desc)) },
+                    onClick = { navController.navigate("settings/content/wireguard") }
+                ),
+            )
         )
 
         Spacer(modifier = Modifier.height(27.dp))
@@ -1020,46 +881,18 @@ fun ContentSettings(
         Material3SettingsGroup(
             title = "Wrapped",
             items = listOf(
-                Material3SettingsItem(
+                Material3SettingsToggle(
                     icon = painterResource(R.drawable.stats),
-                    title = { Text(stringResource(R.string.show_most_stats_playlists)) },
-                    description = { Text(stringResource(R.string.show_most_stats_playlists_desc)) },
-                    trailingContent = {
-                        Switch(
-                            checked = showMostStatsPlaylists,
-                            onCheckedChange = onShowMostStatsPlaylistsChange,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (showMostStatsPlaylists) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SwitchDefaults.IconSize)
-                                )
-                            }
-                        )
-                    },
-                    onClick = { onShowMostStatsPlaylistsChange(!showMostStatsPlaylists) }
+                    title = stringResource(R.string.show_most_stats_playlists),
+                    description = stringResource(R.string.show_most_stats_playlists_desc),
+                    checked = showMostStatsPlaylists,
+                    onCheckedChange = onShowMostStatsPlaylistsChange,
                 ),
-                Material3SettingsItem(
+                Material3SettingsToggle(
                     icon = painterResource(R.drawable.trending_up),
-                    title = { Text(stringResource(R.string.show_wrapped_card)) },
-                    trailingContent = {
-                        Switch(
-                            checked = showWrappedCard,
-                            onCheckedChange = onShowWrappedCardChange,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (showWrappedCard) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SwitchDefaults.IconSize)
-                                )
-                            }
-                        )
-                    },
-                    onClick = { onShowWrappedCardChange(!showWrappedCard) }
+                    title = stringResource(R.string.show_wrapped_card),
+                    checked = showWrappedCard,
+                    onCheckedChange = onShowWrappedCardChange,
                 )
             )
         )
@@ -1069,26 +902,12 @@ fun ContentSettings(
         Material3SettingsGroup(
             title = stringResource(R.string.misc),
             items = listOf(
-                Material3SettingsItem(
+                Material3SettingsToggle(
                     icon = painterResource(R.drawable.shuffle),
-                    title = { Text(stringResource(R.string.randomize_home_order)) },
-                    description = { Text(stringResource(R.string.randomize_home_order_desc)) },
-                    trailingContent = {
-                        Switch(
-                            checked = randomizeHomeOrder,
-                            onCheckedChange = onRandomizeHomeOrderChange,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (randomizeHomeOrder) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SwitchDefaults.IconSize)
-                                )
-                            }
-                        )
-                    },
-                    onClick = { onRandomizeHomeOrderChange(!randomizeHomeOrder) }
+                    title = stringResource(R.string.randomize_home_order),
+                    description = stringResource(R.string.randomize_home_order_desc),
+                    checked = randomizeHomeOrder,
+                    onCheckedChange = onRandomizeHomeOrderChange,
                 ),
                 Material3SettingsItem(
                     icon = painterResource(R.drawable.trending_up),

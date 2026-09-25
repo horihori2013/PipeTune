@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,6 +31,7 @@ import com.metrolist.music.R
 import com.metrolist.music.constants.InnerTubeCookieKey
 import com.metrolist.music.db.entities.PlaylistEntity
 import com.metrolist.music.extensions.isSyncEnabled
+import com.metrolist.music.ui.component.liquidglass.LiquidSwitch
 import com.metrolist.music.utils.rememberPreference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -97,7 +97,7 @@ fun CreatePlaylistDialog(
                         modifier = Modifier.weight(1f),
                         horizontalArrangement = Arrangement.End,
                     ) {
-                        Switch(
+                        LiquidSwitch(
                             checked = syncedPlaylist,
                             onCheckedChange = {
                                 coroutineScope.launch {

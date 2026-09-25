@@ -28,8 +28,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TimePicker
@@ -60,6 +58,7 @@ import com.metrolist.music.playback.alarm.MusicAlarmStore
 import com.metrolist.music.ui.component.DefaultDialog
 import com.metrolist.music.ui.component.Material3SettingsGroup
 import com.metrolist.music.ui.component.Material3SettingsItem
+import com.metrolist.music.ui.component.liquidglass.LiquidSwitch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
@@ -309,17 +308,10 @@ private fun AlarmSwitch(
     onCheckedChange: (Boolean) -> Unit,
     enabled: Boolean = true
 ) {
-    Switch(
+    LiquidSwitch(
         checked = checked,
         onCheckedChange = onCheckedChange,
         enabled = enabled,
-        thumbContent = {
-            Icon(
-                painter = painterResource(if (checked) R.drawable.check else R.drawable.close),
-                contentDescription = null,
-                modifier = Modifier.size(SwitchDefaults.IconSize)
-            )
-        }
     )
 }
 

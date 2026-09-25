@@ -27,8 +27,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
+
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -66,6 +65,7 @@ import com.metrolist.music.ui.component.DefaultDialog
 import com.metrolist.music.ui.component.IconButton
 import com.metrolist.music.ui.component.Material3SettingsGroup
 import com.metrolist.music.ui.component.Material3SettingsItem
+import com.metrolist.music.ui.component.Material3SettingsToggle
 import com.metrolist.music.ui.utils.backToMain
 import com.metrolist.music.utils.makeTimeString
 import com.metrolist.music.utils.rememberPreference
@@ -324,69 +324,27 @@ fun LastFMSettings(
         Material3SettingsGroup(
             title = stringResource(R.string.options),
             items = listOf(
-                Material3SettingsItem(
-                    title = { Text(stringResource(R.string.enable_scrobbling)) },
-                    trailingContent = {
-                        Switch(
-                            checked = lastfmScrobbling,
-                            onCheckedChange = onlastfmScrobblingChange,
-                            enabled = isLoggedIn,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (lastfmScrobbling) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SwitchDefaults.IconSize),
-                                )
-                            }
-                        )
-                    },
+                Material3SettingsToggle(
+                    icon = painterResource(R.drawable.queue_music),
+                    title = stringResource(R.string.enable_scrobbling),
+                    checked = lastfmScrobbling,
+                    onCheckedChange = onlastfmScrobblingChange,
                     enabled = isLoggedIn,
-                    icon = painterResource(R.drawable.queue_music)
                 ),
-                Material3SettingsItem(
-                    title = { Text(stringResource(R.string.lastfm_now_playing)) },
-                    trailingContent = {
-                        Switch(
-                            checked = useNowPlaying,
-                            onCheckedChange = onUseNowPlayingChange,
-                            enabled = isLoggedIn && lastfmScrobbling,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (useNowPlaying) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SwitchDefaults.IconSize),
-                                )
-                            }
-                        )
-                    },
+                Material3SettingsToggle(
+                    icon = painterResource(R.drawable.play),
+                    title = stringResource(R.string.lastfm_now_playing),
+                    checked = useNowPlaying,
+                    onCheckedChange = onUseNowPlayingChange,
                     enabled = isLoggedIn && lastfmScrobbling,
-                    icon = painterResource(R.drawable.play)
                 ),
-                Material3SettingsItem(
-                    title = { Text(stringResource(R.string.last_fm_send_likes)) },
-                    description = { stringResource(R.string.last_fm_send_likes_description) },
-                    trailingContent = {
-                        Switch(
-                            checked = useSendLikes,
-                            onCheckedChange = onUseSendLikes,
-                            enabled = isLoggedIn,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (useSendLikes) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SwitchDefaults.IconSize),
-                                )
-                            }
-                        )
-                    },
+                Material3SettingsToggle(
+                    icon = painterResource(R.drawable.media3_icon_thumb_up_unfilled),
+                    title = stringResource(R.string.last_fm_send_likes),
+                    description = stringResource(R.string.last_fm_send_likes_description),
+                    checked = useSendLikes,
+                    onCheckedChange = onUseSendLikes,
                     enabled = isLoggedIn,
-                    icon = painterResource(R.drawable.media3_icon_thumb_up_unfilled)
                 )
             )
         )

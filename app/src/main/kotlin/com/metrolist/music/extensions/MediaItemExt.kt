@@ -23,27 +23,26 @@ fun Song.toMediaItem() = toMediaMetadata().toMediaItem()
 fun SongItem.toMediaItem() = toMediaMetadata().toMediaItem()
 
 fun MediaMetadata.toMediaItem(): MediaItem {
-    val resolvedMetadata = withResolvedArtistNameAliases()
-    val artistNames = resolvedMetadata.artists.joinToString { it.name }
+    val artistNames = artists.joinToString { it.name }
     return MediaItem.Builder()
-        .setMediaId(resolvedMetadata.id)
-        .setUri(resolvedMetadata.id)
-        .setCustomCacheKey(resolvedMetadata.id)
-        .setTag(resolvedMetadata)
+        .setMediaId(id)
+        .setUri(id)
+        .setCustomCacheKey(id)
+        .setTag(this)
         .setMediaMetadata(
             androidx.media3.common.MediaMetadata.Builder()
-                .setTitle(resolvedMetadata.title)
+                .setTitle(title)
                 .setSubtitle(artistNames)
                 .setArtist(artistNames)
-                .setArtworkUri(resolvedMetadata.thumbnailUrl?.toUri())
-                .setAlbumTitle(resolvedMetadata.album?.title)
-                .setAlbumArtist(resolvedMetadata.artists.firstOrNull()?.name)
-                .setDisplayTitle(resolvedMetadata.title)
+                .setArtworkUri(thumbnailUrl?.toUri())
+                .setAlbumTitle(album?.title)
+                .setAlbumArtist(artists.firstOrNull()?.name)
+                .setDisplayTitle(title)
                 .setMediaType(MEDIA_TYPE_MUSIC)
                 .setIsBrowsable(false)
                 .setIsPlayable(true)
                 .setExtras(Bundle().apply {
-                    resolvedMetadata.thumbnailUrl?.let { putString("artwork_uri", it) }
+                    thumbnailUrl?.let { putString("artwork_uri", it) }
                 })
                 .build(),
         ).build()

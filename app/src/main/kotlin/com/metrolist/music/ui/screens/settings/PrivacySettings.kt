@@ -18,7 +18,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Switch
+
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -42,6 +42,7 @@ import com.metrolist.music.ui.component.DefaultDialog
 import com.metrolist.music.ui.component.IconButton
 import com.metrolist.music.ui.component.Material3SettingsGroup
 import com.metrolist.music.ui.component.Material3SettingsItem
+import com.metrolist.music.ui.component.Material3SettingsToggle
 import com.metrolist.music.ui.utils.backToMain
 import com.metrolist.music.utils.rememberPreference
 
@@ -155,25 +156,11 @@ fun PrivacySettings(
         Material3SettingsGroup(
             title = stringResource(R.string.listen_history),
             items = listOf(
-                Material3SettingsItem(
+                Material3SettingsToggle(
                     icon = painterResource(R.drawable.history),
-                    title = { Text(stringResource(R.string.pause_listen_history)) },
-                    trailingContent = {
-                        Switch(
-                            checked = pauseListenHistory,
-                            onCheckedChange = onPauseListenHistoryChange,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (pauseListenHistory) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(androidx.compose.material3.SwitchDefaults.IconSize)
-                                )
-                            }
-                        )
-                    },
-                    onClick = { onPauseListenHistoryChange(!pauseListenHistory) }
+                    title = stringResource(R.string.pause_listen_history),
+                    checked = pauseListenHistory,
+                    onCheckedChange = onPauseListenHistoryChange,
                 ),
                 Material3SettingsItem(
                     icon = painterResource(R.drawable.delete_history),
@@ -188,25 +175,11 @@ fun PrivacySettings(
         Material3SettingsGroup(
             title = stringResource(R.string.search_history),
             items = listOf(
-                Material3SettingsItem(
+                Material3SettingsToggle(
                     icon = painterResource(R.drawable.search_off),
-                    title = { Text(stringResource(R.string.pause_search_history)) },
-                    trailingContent = {
-                        Switch(
-                            checked = pauseSearchHistory,
-                            onCheckedChange = onPauseSearchHistoryChange,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (pauseSearchHistory) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(androidx.compose.material3.SwitchDefaults.IconSize)
-                                )
-                            }
-                        )
-                    },
-                    onClick = { onPauseSearchHistoryChange(!pauseSearchHistory) }
+                    title = stringResource(R.string.pause_search_history),
+                    checked = pauseSearchHistory,
+                    onCheckedChange = onPauseSearchHistoryChange,
                 ),
                 Material3SettingsItem(
                     icon = painterResource(R.drawable.clear_all),
@@ -221,26 +194,12 @@ fun PrivacySettings(
         Material3SettingsGroup(
             title = stringResource(R.string.misc),
             items = listOf(
-                Material3SettingsItem(
+                Material3SettingsToggle(
                     icon = painterResource(R.drawable.screenshot),
-                    title = { Text(stringResource(R.string.disable_screenshot)) },
-                    description = { Text(stringResource(R.string.disable_screenshot_desc)) },
-                    trailingContent = {
-                        Switch(
-                            checked = disableScreenshot,
-                            onCheckedChange = onDisableScreenshotChange,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (disableScreenshot) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(androidx.compose.material3.SwitchDefaults.IconSize)
-                                )
-                            }
-                        )
-                    },
-                    onClick = { onDisableScreenshotChange(!disableScreenshot) }
+                    title = stringResource(R.string.disable_screenshot),
+                    description = stringResource(R.string.disable_screenshot_desc),
+                    checked = disableScreenshot,
+                    onCheckedChange = onDisableScreenshotChange,
                 )
             )
         )

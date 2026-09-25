@@ -22,8 +22,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
+
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -58,6 +57,7 @@ import com.metrolist.music.ui.component.ActionPromptDialog
 import com.metrolist.music.ui.component.IconButton
 import com.metrolist.music.ui.component.Material3SettingsGroup
 import com.metrolist.music.ui.component.Material3SettingsItem
+import com.metrolist.music.ui.component.Material3SettingsToggle
 import android.text.format.Formatter
 import com.metrolist.music.ui.utils.backToMain
 import com.metrolist.music.utils.rememberPreference
@@ -320,26 +320,12 @@ fun StorageSettings(
         Material3SettingsGroup(
             title = stringResource(R.string.song_cache),
             items = listOf(
-                Material3SettingsItem(
+                Material3SettingsToggle(
                     icon = painterResource(R.drawable.cached),
-                    title = { Text(stringResource(R.string.enable_song_cache)) },
-                    description = { Text(stringResource(R.string.enable_song_cache_desc)) },
-                    trailingContent = {
-                        Switch(
-                            checked = enableSongCache,
-                            onCheckedChange = onEnableSongCacheChange,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (enableSongCache) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SwitchDefaults.IconSize)
-                                )
-                            }
-                        )
-                    },
-                    onClick = { onEnableSongCacheChange(!enableSongCache) }
+                    title = stringResource(R.string.enable_song_cache),
+                    description = stringResource(R.string.enable_song_cache_desc),
+                    checked = enableSongCache,
+                    onCheckedChange = onEnableSongCacheChange,
                 ),
                 Material3SettingsItem(
                     icon = painterResource(R.drawable.cached),

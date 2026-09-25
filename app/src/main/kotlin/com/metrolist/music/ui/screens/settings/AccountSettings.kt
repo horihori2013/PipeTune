@@ -22,8 +22,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
+
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -67,6 +66,7 @@ import com.metrolist.music.ui.component.DefaultDialog
 import com.metrolist.music.ui.component.InfoLabel
 import com.metrolist.music.ui.component.Material3SettingsGroup
 import com.metrolist.music.ui.component.Material3SettingsItem
+import com.metrolist.music.ui.component.Material3SettingsToggle
 import com.metrolist.music.ui.component.TextFieldDialog
 import com.metrolist.music.utils.Updater
 import com.metrolist.music.utils.rememberPreference
@@ -336,50 +336,22 @@ fun AccountSettings(
                         else showTokenEditor = true
                     }
                 ),
-                Material3SettingsItem(
-                    title = { Text(stringResource(R.string.more_content)) },
+                Material3SettingsToggle(
                     icon = painterResource(R.drawable.cached),
-                    trailingContent = {
-                        Switch(
-                            enabled = isLoggedIn,
-                            checked = useLoginForBrowse,
-                            onCheckedChange = {
-                                YouTube.useLoginForBrowse = it
-                                onUseLoginForBrowseChange(it)
-                            },
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (useLoginForBrowse) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SwitchDefaults.IconSize)
-                                )
-                            }
-                        )
+                    title = stringResource(R.string.more_content),
+                    checked = useLoginForBrowse,
+                    onCheckedChange = {
+                        YouTube.useLoginForBrowse = it
+                        onUseLoginForBrowseChange(it)
                     },
-                    enabled = isLoggedIn
+                    enabled = isLoggedIn,
                 ),
-                Material3SettingsItem(
-                    title = { Text(stringResource(R.string.yt_sync)) },
+                Material3SettingsToggle(
                     icon = painterResource(R.drawable.cached),
-                    trailingContent = {
-                        Switch(
-                            enabled = isLoggedIn,
-                            checked = ytmSync,
-                            onCheckedChange = onYtmSyncChange,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (ytmSync) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SwitchDefaults.IconSize)
-                                )
-                            }
-                        )
-                    },
-                    enabled = isLoggedIn
+                    title = stringResource(R.string.yt_sync),
+                    checked = ytmSync,
+                    onCheckedChange = onYtmSyncChange,
+                    enabled = isLoggedIn,
                 )
             ),
             useLowContrast = true

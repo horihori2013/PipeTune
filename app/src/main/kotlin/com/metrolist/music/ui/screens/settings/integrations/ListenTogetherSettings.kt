@@ -47,8 +47,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -93,6 +91,7 @@ import com.metrolist.music.ui.component.DefaultDialog
 import com.metrolist.music.ui.component.IconButton
 import com.metrolist.music.ui.component.IntegrationCard
 import com.metrolist.music.ui.component.IntegrationCardItem
+import com.metrolist.music.ui.component.liquidglass.LiquidSwitch
 import com.metrolist.music.ui.utils.backToMain
 import com.metrolist.music.utils.rememberPreference
 import kotlinx.coroutines.flow.collectLatest
@@ -427,21 +426,11 @@ fun ListenTogetherSettings(navController: NavController) {
                                 Text(stringResource(R.string.listen_together_auto_approval_joins_desc))
                             },
                             trailingContent = {
-                                Switch(
+                                LiquidSwitch(
                                     checked = autoApprovalJoins,
                                     onCheckedChange = { autoApprovalJoins = it },
                                     // Only disable for guests in a room (hosts can always change)
                                     enabled = roomState == null || role != RoomRole.GUEST,
-                                    thumbContent = {
-                                        Icon(
-                                            painter =
-                                                painterResource(
-                                                    id = if (autoApprovalJoins) R.drawable.check else R.drawable.close,
-                                                ),
-                                            contentDescription = null,
-                                            modifier = Modifier.size(SwitchDefaults.IconSize),
-                                        )
-                                    },
                                 )
                             },
                             // Allow clicking to see disabled state, but only change if enabled
@@ -454,21 +443,11 @@ fun ListenTogetherSettings(navController: NavController) {
                                 Text(stringResource(R.string.listen_together_auto_approval_suggestions_desc))
                             },
                             trailingContent = {
-                                Switch(
+                                LiquidSwitch(
                                     checked = autoApproveSuggestions,
                                     onCheckedChange = { autoApproveSuggestions = it },
                                     // Only disable for guests in a room (hosts can always change)
                                     enabled = roomState == null || role != RoomRole.GUEST,
-                                    thumbContent = {
-                                        Icon(
-                                            painter =
-                                                painterResource(
-                                                    id = if (autoApproveSuggestions) R.drawable.check else R.drawable.close,
-                                                ),
-                                            contentDescription = null,
-                                            modifier = Modifier.size(SwitchDefaults.IconSize),
-                                        )
-                                    },
                                 )
                             },
                             // Allow clicking to see disabled state, but only change if enabled
@@ -481,19 +460,9 @@ fun ListenTogetherSettings(navController: NavController) {
                                 Text(stringResource(R.string.listen_together_sync_volume_desc))
                             },
                             trailingContent = {
-                                Switch(
+                                LiquidSwitch(
                                     checked = syncHostVolume,
                                     onCheckedChange = { syncHostVolume = it },
-                                    thumbContent = {
-                                        Icon(
-                                            painter =
-                                                painterResource(
-                                                    id = if (syncHostVolume) R.drawable.check else R.drawable.close,
-                                                ),
-                                            contentDescription = null,
-                                            modifier = Modifier.size(SwitchDefaults.IconSize),
-                                        )
-                                    },
                                 )
                             },
                             onClick = { syncHostVolume = !syncHostVolume },

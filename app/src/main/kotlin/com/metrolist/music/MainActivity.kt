@@ -47,7 +47,6 @@ import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -166,7 +165,6 @@ import com.metrolist.music.constants.SlimNavBarHeight
 import com.metrolist.music.constants.SlimNavBarKey
 import com.metrolist.music.constants.StopMusicOnTaskClearKey
 import com.metrolist.music.constants.UpdateNotificationsEnabledKey
-import com.metrolist.music.constants.UseNewMiniPlayerDesignKey
 import com.metrolist.music.constants.VideoThumbnailMigrationDoneKey
 import com.metrolist.music.db.MusicDatabase
 import com.metrolist.music.db.entities.SearchHistory
@@ -198,6 +196,9 @@ import com.metrolist.music.ui.theme.ColorSaver
 import com.metrolist.music.ui.theme.DefaultThemeColor
 import com.metrolist.music.ui.theme.MetrolistTheme
 import com.metrolist.music.ui.theme.extractThemeColor
+import com.kyant.backdrop.backdrops.LayerBackdrop
+import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.kyant.backdrop.backdrops.layerBackdrop
 import com.metrolist.music.ui.utils.appBarScrollBehavior
 import com.metrolist.music.ui.utils.resetHeightOffset
 import com.metrolist.music.utils.ReleaseInfo
@@ -721,7 +722,6 @@ class MainActivity : FragmentActivity() {
             ) {
                 val density = LocalDensity.current
                 val configuration = LocalWindowInfo.current
-                val cutoutInsets = WindowInsets.displayCutout
                 val windowsInsets = WindowInsets.systemBars
                 val bottomInset = with(density) { windowsInsets.getBottom(density).toDp() }
                 val bottomInsetDp = WindowInsets.systemBars.asPaddingValues().calculateBottomPadding()
@@ -754,7 +754,6 @@ class MainActivity : FragmentActivity() {
                     navigationItems.mapIndexed { i, s -> s.route to i }.toMap()
                 }
                 val (slimNav) = rememberPreference(SlimNavBarKey, defaultValue = false)
-                val (useNewMiniPlayerDesign) = rememberPreference(UseNewMiniPlayerDesignKey, defaultValue = true)
                 val (defaultOpenTabInt) = rememberPreference(DefaultOpenTabKey, defaultValue = NavigationTab.HOME.name)
                 val defaultOpenTab = remember(defaultOpenTabInt) {
                     try {
@@ -830,29 +829,47 @@ class MainActivity : FragmentActivity() {
                 val isLandscape = configuration.containerDpSize.width > configuration.containerDpSize.height
                 val isTablet = configuration.containerDpSize.width >= 600.dp
 
-                val showRail = (isLandscape || isTablet) && !inSearchScreen
+				val showRail = isLandscape && shouldShowNavigationBar
 
                 val navPadding =
-                    if (shouldShowNavigationBar && !showRail) {
+                    if (shouldShowNavigationBar || showRail) {
                         if (slimNav) SlimNavBarHeight else NavigationBarHeight
                     } else {
                         0.dp
                     }
 
                 val navigationBarHeight by animateDpAsState(
-                    targetValue = if (shouldShowNavigationBar && !showRail) NavigationBarHeight else 0.dp,
+                    targetValue = if (shouldShowNavigationBar || showRail) NavigationBarHeight else 0.dp,
                     animationSpec = NavigationBarAnimationSpec,
                     label = "navBarHeight",
                 )
+
+                val miniPlayerAlignsWithRail = showRail && isLandscape && isTablet
 
                 val playerBottomSheetState =
                     rememberBottomSheetState(
                         dismissedBound = 0.dp,
                         collapsedBound =
-                            bottomInset +
-                                (if (!showRail && shouldShowNavigationBar) navPadding else 0.dp) +
-                                (if (useNewMiniPlayerDesign) MiniPlayerBottomSpacing else 0.dp) +
-                                MiniPlayerHeight,
+                            if (miniPlayerAlignsWithRail) {
+                                // Landscape: mini player (left) and rail pill (right) are 64dp
+                                // capsules side by side. The rail pill is centered in its
+                                // (bottomInset + navPadding) container and lifted 16dp by the
+                                // graphicsLayer below, so its top edge sits at
+                                // (bottomInset + navPadding) / 2 + 32 + 16.
+                                (bottomInset + navPadding) / 2 + 48.dp
+                            } else {
+                                bottomInset +
+                                    (if (shouldShowNavigationBar) {
+                                        // The navbar pill is centered over the whole (inset + nav)
+                                        // container, so a non-slim bar ends up closer to the mini
+                                        // player than a slim one; pull it down half the difference.
+                                        navPadding - (navPadding - SlimNavBarHeight) / 2
+                                    } else {
+                                        0.dp
+                                    }) +
+                                    MiniPlayerBottomSpacing +
+                                    MiniPlayerHeight
+                            },
                         expandedBound = maxHeight,
                     )
 
@@ -1052,6 +1069,12 @@ class MainActivity : FragmentActivity() {
                         ChangelogScreen(onDismiss = { showChangelog.value = false })
                     }
 
+                    val backdrop = rememberLayerBackdrop()
+
+                    CompositionLocalProvider(
+                        LocalNavBarBackdrop provides backdrop,
+                    ) {
+
                     Scaffold(
                         snackbarHost = { SnackbarHost(snackbarHostState) },
                         topBar = {
@@ -1112,11 +1135,15 @@ class MainActivity : FragmentActivity() {
                                                             contentDescription = stringResource(R.string.account),
                                                             modifier = Modifier.size(24.dp),
                                                         )
-                                                    }
-                                                }
-                                            }
+                            }
+                        }
+                    }
                                         },
                                         scrollBehavior = topAppBarScrollBehavior,
+                                        windowInsets =
+                                            TopAppBarDefaults.windowInsets.add(
+                                                WindowInsets.displayCutout.only(WindowInsetsSides.Horizontal)
+                                            ),
                                         colors =
                                             TopAppBarDefaults.topAppBarColors(
                                                 containerColor = if (pureBlack) Color.Black else MaterialTheme.colorScheme.surfaceContainer,
@@ -1124,15 +1151,6 @@ class MainActivity : FragmentActivity() {
                                                 titleContentColor = MaterialTheme.colorScheme.onSurface,
                                                 actionIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
                                                 navigationIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                                            ),
-                                        modifier =
-                                            Modifier.windowInsetsPadding(
-                                                if (showRail) {
-                                                    WindowInsets(left = NavigationBarHeight)
-                                                        .add(cutoutInsets.only(WindowInsetsSides.Start))
-                                                } else {
-                                                    cutoutInsets.only(WindowInsetsSides.Start + WindowInsetsSides.End)
-                                                },
                                             ),
                                     )
                                 }
@@ -1221,9 +1239,11 @@ class MainActivity : FragmentActivity() {
                                         slimNav = slimNav,
                                         onSearchLongClick = onSearchLongClick,
                                         onHomeLongHold = { showAccountDialog = true },
+                                        backdrop = LocalNavBarBackdrop.current,
                                         modifier =
                                             Modifier
                                                 .align(Alignment.BottomCenter)
+                                                .padding(horizontal = 16.dp)
                                                 .height(bottomInset + navPadding)
                                                 // Use graphicsLayer instead of offset to avoid recomposition
                                                 // graphicsLayer runs during draw phase, not composition phase
@@ -1240,7 +1260,7 @@ class MainActivity : FragmentActivity() {
                                                             val slideOffset = totalHeightPx * progress
                                                             val hideOffset =
                                                                 totalHeightPx * (1 - navBarHeightPx / NavigationBarHeight.toPx())
-                                                            slideOffset + hideOffset
+                                                            slideOffset + hideOffset - 16.dp.toPx()
                                                         }
                                                 },
                                     )
@@ -1255,9 +1275,7 @@ class MainActivity : FragmentActivity() {
                                                 .graphicsLayer {
                                                     val progress = playerBottomSheetState.progress
                                                     alpha =
-                                                        if (progress > 0f ||
-                                                            (useNewMiniPlayerDesign && !shouldShowNavigationBar)
-                                                        ) {
+                                                        if (progress > 0f || !shouldShowNavigationBar) {
                                                             0f
                                                         } else {
                                                             1f
@@ -1266,29 +1284,62 @@ class MainActivity : FragmentActivity() {
                                     )
                                 }
                             } else {
-                                if (currentRoute != "wrapped") {
-                                    if (activePlayerConnection != null) {
-                                        BottomSheetPlayer(
-                                            state = playerBottomSheetState,
-                                            navController = navController,
+                                Box {
+                                    if (currentRoute != "wrapped") {
+                                        if (activePlayerConnection != null) {
+                                            BottomSheetPlayer(
+                                                state = playerBottomSheetState,
+                                                navController = navController,
+                                                pureBlack = pureBlack,
+                                            )
+                                        }
+
+                                        AppNavigationBar(
+                                            navigationItems = navigationItems,
+                                            currentRoute = currentRoute,
+                                            onItemClick = onNavItemClick,
                                             pureBlack = pureBlack,
+                                            slimNav = slimNav,
+                                            onSearchLongClick = onSearchLongClick,
+                                            onHomeLongHold = { showAccountDialog = true },
+                                            backdrop = LocalNavBarBackdrop.current,
+                                            modifier =
+                                                Modifier
+                                                    .align(Alignment.BottomEnd)
+                                                    .fillMaxWidth(0.5f)
+                                                    .padding(horizontal = 16.dp)
+                                                    .height(bottomInset + navPadding)
+                                                    .graphicsLayer {
+                                                        val navBarHeightPx = navigationBarHeight.toPx()
+                                                        val totalHeightPx = navBarTotalHeight.toPx()
+
+                                                        translationY =
+                                                            if (navBarHeightPx == 0f) {
+                                                                totalHeightPx
+                                                            } else {
+                                                                val progress = playerBottomSheetState.progress.coerceIn(0f, 1f)
+                                                                val slideOffset = totalHeightPx * progress
+                                                                val hideOffset =
+                                                                    totalHeightPx * (1 - navBarHeightPx / NavigationBarHeight.toPx())
+                                                                slideOffset + hideOffset - 16.dp.toPx()
+                                                            }
+                                                    },
                                         )
                                     }
-                                }
 
-                                Box(
-                                    modifier =
-                                        Modifier
-                                            .fillMaxWidth()
-                                            .align(Alignment.BottomCenter)
-                                            .height(bottomInsetDp)
-                                            // Use graphicsLayer for background color changes
-                                            .graphicsLayer {
-                                                val progress = playerBottomSheetState.progress
-                                                alpha =
-                                                    if (progress > 0f || (useNewMiniPlayerDesign && !shouldShowNavigationBar)) 0f else 1f
-                                            }.background(baseBg),
-                                )
+                                    Box(
+                                        modifier =
+                                            Modifier
+                                                .fillMaxWidth()
+                                                .align(Alignment.BottomCenter)
+                                                .height(bottomInsetDp)
+                                                .graphicsLayer {
+                                                    val progress = playerBottomSheetState.progress
+                                                    alpha =
+                                                        if (progress > 0f || !shouldShowNavigationBar) 0f else 1f
+                                                }.background(baseBg),
+                                    )
+                                }
                             }
                         },
                         modifier =
@@ -1296,7 +1347,7 @@ class MainActivity : FragmentActivity() {
                                 .fillMaxSize()
                                 .nestedScroll(topAppBarScrollBehavior.nestedScrollConnection),
                     ) {
-                        Row(Modifier.fillMaxSize()) {
+                        Row(Modifier.fillMaxSize().layerBackdrop(backdrop)) {
                             val onRailItemClick: (Screens, Boolean) -> Unit =
                                 remember(navController, coroutineScope, topAppBarScrollBehavior, playerBottomSheetState) {
                                     { screen: Screens, isSelected: Boolean ->
@@ -1330,17 +1381,7 @@ class MainActivity : FragmentActivity() {
                                     }
                                 }
 
-                            if (showRail && currentRoute != "wrapped") {
-                                AppNavigationRail(
-                                    navigationItems = navigationItems,
-                                    currentRoute = currentRoute,
-                                    onItemClick = onRailItemClick,
-                                    pureBlack = pureBlack,
-                                    onSearchLongClick = onRailSearchLongClick,
-                                    onHomeLongHold = { showAccountDialog = true },
-                                )
-                            }
-                            Box(Modifier.weight(1f)) {
+                            Box(Modifier.fillMaxSize()) {
                                 // NavHost with animations (Material 3 Expressive style)
                                 NavHost(
                                     navController = navController,
@@ -1403,6 +1444,8 @@ class MainActivity : FragmentActivity() {
                             }
                         }
                     }
+
+                    } // end CompositionLocalProvider(LocalNavBarBackdrop)
 
                     BottomSheetMenu(
                         state = LocalMenuState.current,
@@ -1727,3 +1770,4 @@ val LocalListenTogetherManager = staticCompositionLocalOf<com.metrolist.music.li
 val LocalChangelogState = staticCompositionLocalOf<MutableState<Boolean>> { error("No LocalChangelogState provided") }
 val LocalArtistNameAliases = staticCompositionLocalOf<Map<String, String>> { emptyMap() }
 val LocalIsPlayerExpanded = compositionLocalOf { false }
+val LocalNavBarBackdrop = compositionLocalOf<com.kyant.backdrop.Backdrop?> { null }

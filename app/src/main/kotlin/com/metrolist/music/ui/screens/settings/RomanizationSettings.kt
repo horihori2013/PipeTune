@@ -16,8 +16,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
+
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TriStateCheckbox
@@ -38,6 +37,7 @@ import com.metrolist.music.constants.LyricsRomanizeList
 import com.metrolist.music.ui.component.IconButton
 import com.metrolist.music.ui.component.Material3SettingsGroup
 import com.metrolist.music.ui.component.Material3SettingsItem
+import com.metrolist.music.ui.component.Material3SettingsToggle
 import com.metrolist.music.ui.utils.backToMain
 import com.metrolist.music.utils.rememberPreference
 
@@ -106,43 +106,17 @@ fun RomanizationSettings(
         Material3SettingsGroup(
             title = stringResource(R.string.options),
             items = listOf(
-                Material3SettingsItem(
-                    title = { Text(stringResource(R.string.lyrics_romanize_as_main)) },
-                    trailingContent = {
-                        Switch(
-                            checked = lyricsRomanizeAsMain,
-                            onCheckedChange = onLyricsRomanizeAsMainChange,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (lyricsRomanizeAsMain) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SwitchDefaults.IconSize),
-                                )
-                            }
-                        )
-                    },
-                    icon = painterResource(R.drawable.queue_music)
+                Material3SettingsToggle(
+                    icon = painterResource(R.drawable.queue_music),
+                    title = stringResource(R.string.lyrics_romanize_as_main),
+                    checked = lyricsRomanizeAsMain,
+                    onCheckedChange = onLyricsRomanizeAsMainChange,
                 ),
-                Material3SettingsItem(
-                    title = { Text(stringResource(R.string.line_by_line_option_title)) },
-                    trailingContent = {
-                        Switch(
-                            checked = lyricsRomanizeCyrillicByLine,
-                            onCheckedChange = onLyricsRomanizeCyrillicByLineChange,
-                            thumbContent = {
-                                Icon(
-                                    painter = painterResource(
-                                        id = if (lyricsRomanizeCyrillicByLine) R.drawable.check else R.drawable.close
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(SwitchDefaults.IconSize),
-                                )
-                            }
-                        )
-                    },
-                    icon = painterResource(R.drawable.info)
+                Material3SettingsToggle(
+                    icon = painterResource(R.drawable.info),
+                    title = stringResource(R.string.line_by_line_option_title),
+                    checked = lyricsRomanizeCyrillicByLine,
+                    onCheckedChange = onLyricsRomanizeCyrillicByLineChange,
                 )
             )
         )

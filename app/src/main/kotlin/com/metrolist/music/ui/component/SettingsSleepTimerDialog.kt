@@ -10,12 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
@@ -33,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.metrolist.music.R
+import com.metrolist.music.ui.component.liquidglass.LiquidSwitch
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
@@ -347,18 +343,9 @@ fun SleepTimerDialog(
                                 text = stringResource(R.string.sleep_timer_weekdays),
                                 modifier = Modifier.weight(1f),
                             )
-                            Switch(
+                            LiquidSwitch(
                                 checked = weekdaysEnabled,
                                 onCheckedChange = { weekdaysEnabled = it },
-                                thumbContent = {
-                                    Icon(
-                                        painter = painterResource(
-                                            if (weekdaysEnabled) R.drawable.check else R.drawable.close,
-                                        ),
-                                        contentDescription = null,
-                                        modifier = Modifier.size(SwitchDefaults.IconSize),
-                                    )
-                                },
                                 modifier = Modifier.scale(0.85f),
                             )
                         }
@@ -399,18 +386,9 @@ fun SleepTimerDialog(
                                 text = stringResource(R.string.sleep_timer_weekends),
                                 modifier = Modifier.weight(1f),
                             )
-                            Switch(
+                            LiquidSwitch(
                                 checked = weekendsEnabled,
                                 onCheckedChange = { weekendsEnabled = it },
-                                thumbContent = {
-                                    Icon(
-                                        painter = painterResource(
-                                            if (weekendsEnabled) R.drawable.check else R.drawable.close,
-                                        ),
-                                        contentDescription = null,
-                                        modifier = Modifier.size(SwitchDefaults.IconSize),
-                                    )
-                                },
                                 modifier = Modifier.scale(0.85f),
                             )
                         }
@@ -492,20 +470,11 @@ fun SleepTimerDialog(
                                         modifier = Modifier.weight(1f),
                                         style = MaterialTheme.typography.bodyMedium,
                                     )
-                                    Switch(
+                                    LiquidSwitch(
                                         checked = isDaySelected,
                                         onCheckedChange = {
                                             selectedDays =
                                                 if (index in selectedDays) selectedDays - index else selectedDays + index
-                                        },
-                                        thumbContent = {
-                                            Icon(
-                                                painter = painterResource(
-                                                    if (isDaySelected) R.drawable.check else R.drawable.close,
-                                                ),
-                                                contentDescription = null,
-                                                modifier = Modifier.size(SwitchDefaults.IconSize),
-                                            )
                                         },
                                         modifier = Modifier.scale(0.85f),
                                     )

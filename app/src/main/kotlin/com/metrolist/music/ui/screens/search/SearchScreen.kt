@@ -262,15 +262,6 @@ fun SearchScreen(
                         }
                     }
                 },
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(
-                            painter = painterResource(R.drawable.arrow_back),
-                            contentDescription = stringResource(R.string.dismiss),
-                            tint = MaterialTheme.colorScheme.onSurface,
-                        )
-                    }
-                },
                 colors =
                     TopAppBarDefaults.topAppBarColors(
                         containerColor = if (pureBlack) Color.Black else MaterialTheme.colorScheme.surfaceContainer,

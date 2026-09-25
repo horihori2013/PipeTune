@@ -7,7 +7,7 @@ if (localPropertiesFile.exists()) {
     localProperties.load(localPropertiesFile.inputStream())
 }
 
-val baseApplicationId = "com.metrolist.music"
+val baseApplicationId = "io.github.horihori2013.pipetune"
 val applicationIdOverride = System.getenv("METROLIST_APPLICATION_ID")?.takeIf { it.isNotBlank() }
 val appNameOverride = System.getenv("METROLIST_APP_NAME")?.takeIf { it.isNotBlank() }
 val buildCommit =
@@ -128,9 +128,6 @@ android {
             )
         }
         debug {
-            if (applicationIdOverride == null) {
-                applicationIdSuffix = ".debug"
-            }
             isDebuggable = true
             if (appNameOverride == null) {
                 resValue("string", "app_name", "Metrolist Debug")
@@ -271,6 +268,7 @@ dependencies {
     implementation(libs.material3)
     implementation(libs.palette)
     implementation(libs.materialKolor)
+    implementation(libs.kyantShapes)
 
     implementation(libs.appcompat)
 

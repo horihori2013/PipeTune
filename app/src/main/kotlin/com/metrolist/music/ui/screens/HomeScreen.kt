@@ -66,6 +66,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -548,7 +549,7 @@ fun DailyDiscoverCard(
                 model =
                     ImageRequest
                         .Builder(LocalContext.current)
-                        .data(dailyDiscover.recommendation.thumbnail?.resize(1080, 1080))
+                        .data(dailyDiscover.recommendation.thumbnail?.resize(540, 540))
                         .crossfade(true)
                         .build(),
                 contentDescription = null,
@@ -681,7 +682,9 @@ fun HomeScreen(
     val episodesForLater by viewModel.episodesForLater.collectAsStateWithLifecycle()
 
     val isLoading: Boolean by viewModel.isLoading.collectAsStateWithLifecycle()
-    val isMoodAndGenresLoading = isLoading && explorePage?.moodAndGenres == null
+    val isMoodAndGenresLoading by remember {
+        derivedStateOf { isLoading && explorePage?.moodAndGenres == null }
+    }
     val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
     val isRandomizing by viewModel.isRandomizing.collectAsStateWithLifecycle()
     val pullRefreshState = rememberPullToRefreshState()
@@ -1236,13 +1239,14 @@ fun HomeScreen(
                         }
 
                         item(key = "00_your_shows_list") {
+                            val dedupedSavedPodcastShows = remember(savedPodcastShows) { savedPodcastShows.distinctBy { it.id } }
                             LazyRow(
                                 contentPadding =
                                     WindowInsets.systemBars
                                         .only(WindowInsetsSides.Horizontal)
                                         .asPaddingValues(),
                             ) {
-                                items(savedPodcastShows.distinctBy { it.id }, key = { "home_saved_podcast_${it.id}" }) { podcast ->
+                                items(dedupedSavedPodcastShows, key = { "home_saved_podcast_${it.id}" }) { podcast ->
                                     ytGridItem(podcast)
                                 }
                             }
@@ -1261,13 +1265,14 @@ fun HomeScreen(
                         }
 
                         item(key = "00_episodes_for_later_list") {
+                            val dedupedEpisodesForLater = remember(episodesForLater) { episodesForLater.distinctBy { it.id } }
                             LazyRow(
                                 contentPadding =
                                     WindowInsets.systemBars
                                         .only(WindowInsetsSides.Horizontal)
                                         .asPaddingValues(),
                             ) {
-                                items(episodesForLater.distinctBy { it.id }, key = { "home_episode_later_${it.id}" }) { episode ->
+                                items(dedupedEpisodesForLater, key = { "home_episode_later_${it.id}" }) { episode ->
                                     ytGridItem(episode)
                                 }
                             }
@@ -1284,13 +1289,14 @@ fun HomeScreen(
                         }
 
                         item(key = "0_podcast_channels_list") {
+                            val dedupedFeaturedPodcasts = remember(featuredPodcasts) { featuredPodcasts.distinctBy { it.id } }
                             LazyRow(
                                 contentPadding =
                                     WindowInsets.systemBars
                                         .only(WindowInsetsSides.Horizontal)
                                         .asPaddingValues(),
                             ) {
-                                items(featuredPodcasts.distinctBy { it.id }, key = { "home_featured_podcast_${it.id}" }) { podcast ->
+                                items(dedupedFeaturedPodcasts, key = { "home_featured_podcast_${it.id}" }) { podcast ->
                                     ytGridItem(podcast)
                                 }
                             }
@@ -1357,13 +1363,14 @@ fun HomeScreen(
                             }
 
                             item(key = "1_chip_section_list_${section.index}") {
+                                val dedupedSectionItems = remember(sectionData.items) { sectionData.items.distinctBy { it.id } }
                                 LazyRow(
                                     contentPadding =
                                         WindowInsets.systemBars
                                             .only(WindowInsetsSides.Horizontal)
                                             .asPaddingValues(),
                                 ) {
-                                    items(sectionData.items.distinctBy { it.id }, key = { "home_chip_section_${it.id}" }) { item ->
+                                    items(dedupedSectionItems, key = { "home_chip_section_${it.id}" }) { item ->
                                         ytGridItem(item)
                                     }
                                 }
@@ -1392,12 +1399,13 @@ fun HomeScreen(
                                     contentAlignment = Alignment.Center,
                                 ) {
                                     if (isWrappedDataReady) {
-                                        val bbhFont =
+                                        val bbhFont = remember {
                                             try {
                                                 FontFamily(Font(R.font.bbh_bartle_regular))
                                             } catch (e: Exception) {
                                                 FontFamily.Default
                                             }
+                                        }
                                         Column(
                                             modifier = Modifier.padding(16.dp),
                                             horizontalAlignment = Alignment.CenterHorizontally,
@@ -1765,6 +1773,7 @@ fun HomeScreen(
                             quickPicks?.takeIf { it.isNotEmpty() }?.let { quickPicks ->
                                 item(key = "quick_picks_title") {
                                     val quickPicksTitle = stringResource(R.string.quick_picks)
+                                    val dedupedQuickPicksForPlayAll = remember(quickPicks) { quickPicks.distinctBy { it.id } }
                                     NavigationTitle(
                                         title = quickPicksTitle,
                                         onPlayAllClick =
@@ -1773,7 +1782,7 @@ fun HomeScreen(
                                                     playerConnection.playQueue(
                                                         ListQueue(
                                                             title = quickPicksTitle,
-                                                            items = quickPicks.distinctBy { it.id }.map { it.toMediaItem() },
+                                                            items = dedupedQuickPicksForPlayAll.map { it.toMediaItem() },
                                                         ),
                                                     )
                                                 }
@@ -1784,6 +1793,7 @@ fun HomeScreen(
                                 }
 
                                 item(key = "quick_picks_list") {
+                                    val dedupedQuickPicks = remember(quickPicks) { quickPicks.distinctBy { it.id } }
                                     LazyHorizontalGrid(
                                         state = quickPicksLazyGridState,
                                         rows = GridCells.Fixed(4),
@@ -1796,11 +1806,11 @@ fun HomeScreen(
                                             Modifier
                                                 .fillMaxWidth()
                                                 .height(ListItemHeight * 4),
-                                        ) {
-                                            items(
-                                                items = quickPicks.distinctBy { it.id },
-                                                key = { "home_quickpick_${it.id}" },
-                                            ) { originalSong ->
+                                    ) {
+                                        items(
+                                            items = dedupedQuickPicks,
+                                            key = { "home_quickpick_${it.id}" },
+                                        ) { originalSong ->
                                             // fetch song from database to keep updated
                                             val song by database
                                                 .song(originalSong.id)
@@ -1883,7 +1893,7 @@ fun HomeScreen(
                                         contentPadding = PaddingValues(horizontal = 16.dp),
                                         horizontalArrangement = Arrangement.spacedBy(16.dp),
                                     ) {
-                                        items(playlists) { item ->
+                                        items(playlists, key = { it.playlist.id }) { item ->
                                             CommunityPlaylistCard(
                                                 item = item,
                                                 onClick = {
@@ -1990,6 +2000,7 @@ fun HomeScreen(
                                 }
 
                                 item(key = "keep_listening_list") {
+                                    val dedupedKeepListening = remember(keepListening) { keepListening.distinctBy { it.id } }
                                     val rows = if (keepListening.size > 6) 2 else 1
                                     LazyHorizontalGrid(
                                         state = remember("keep_listening_grid") { LazyGridState() },
@@ -2013,7 +2024,7 @@ fun HomeScreen(
                                                     ) * rows,
                                                 ),
                                     ) {
-                                        items(keepListening.distinctBy { it.id }, key = { "home_keep_listening_${it.id}" }) {
+                                        items(dedupedKeepListening, key = { "home_keep_listening_${it.id}" }) {
                                             localGridItem(it)
                                         }
                                     }
@@ -2062,6 +2073,7 @@ fun HomeScreen(
                                 }
 
                                 item(key = "account_playlists_list") {
+                                    val dedupedAccountPlaylists = remember(accountPlaylists) { accountPlaylists.distinctBy { it.id } }
                                     LazyRow(
                                         contentPadding =
                                             WindowInsets.systemBars
@@ -2069,7 +2081,7 @@ fun HomeScreen(
                                                 .asPaddingValues(),
                                     ) {
                                         items(
-                                            items = accountPlaylists.distinctBy { it.id },
+                                            items = dedupedAccountPlaylists,
                                             key = { "home_account_playlist_${it.id}" },
                                         ) { item ->
                                             ytGridItem(item)
@@ -2083,6 +2095,7 @@ fun HomeScreen(
                             forgottenFavorites?.takeIf { it.isNotEmpty() }?.let { forgottenFavorites ->
                                 item(key = "forgotten_favorites_title") {
                                     val forgottenFavoritesTitle = stringResource(R.string.forgotten_favorites)
+                                    val dedupedForgottenFavoritesForPlayAll = remember(forgottenFavorites) { forgottenFavorites.distinctBy { it.id } }
                                     NavigationTitle(
                                         title = forgottenFavoritesTitle,
                                         onPlayAllClick =
@@ -2091,7 +2104,7 @@ fun HomeScreen(
                                                     playerConnection.playQueue(
                                                         ListQueue(
                                                             title = forgottenFavoritesTitle,
-                                                            items = forgottenFavorites.distinctBy { it.id }.map { it.toMediaItem() },
+                                                            items = dedupedForgottenFavoritesForPlayAll.map { it.toMediaItem() },
                                                         ),
                                                     )
                                                 }
@@ -2102,6 +2115,7 @@ fun HomeScreen(
                                 }
 
                                 item(key = "forgotten_favorites_list") {
+                                    val dedupedForgottenFavorites = remember(forgottenFavorites) { forgottenFavorites.distinctBy { it.id } }
                                     // take min in case list size is less than 4
                                     val rows = min(4, forgottenFavorites.size)
                                     LazyHorizontalGrid(
@@ -2121,7 +2135,7 @@ fun HomeScreen(
                                                 .height(ListItemHeight * rows),
                                         ) {
                                             items(
-                                                items = forgottenFavorites.distinctBy { it.id },
+                                                items = dedupedForgottenFavorites,
                                                 key = { "home_forgotten_${it.id}" },
                                             ) { originalSong ->
                                             val song by database
@@ -2242,13 +2256,14 @@ fun HomeScreen(
                                 }
 
                                 item(key = "similar_to_list_${section.index}") {
+                                    val dedupedSimilarItems = remember(recommendation.items) { recommendation.items.distinctBy { it.id } }
                                     LazyRow(
                                         contentPadding =
                                             WindowInsets.systemBars
                                                 .only(WindowInsetsSides.Horizontal)
                                                 .asPaddingValues(),
                                     ) {
-                                        items(recommendation.items.distinctBy { it.id }, key = { "home_similar_${it.id}" }) { item ->
+                                        items(dedupedSimilarItems, key = { "home_similar_${it.id}" }) { item ->
                                             ytGridItem(item)
                                         }
                                     }
@@ -2342,6 +2357,7 @@ fun HomeScreen(
                                 if (isSongsOnlySection) {
                                     // Render songs as a horizontal scrollable list (like Quick picks in YouTube Music)
                                     item(key = "home_section_list_${section.index}") {
+                                        val dedupedSectionSongs = remember(sectionSongs) { sectionSongs.distinctBy { it.id } }
                                         LazyHorizontalGrid(
                                             state = remember("section_${section.index}_grid") { LazyGridState() },
                                             rows = GridCells.Fixed(4),
@@ -2355,7 +2371,7 @@ fun HomeScreen(
                                                     .height(ListItemHeight * 4),
                                         ) {
                                             items(
-                                                items = sectionSongs.distinctBy { it.id },
+                                                items = dedupedSectionSongs,
                                                 key = { "home_section_${section.index}_song_${it.id}" },
                                             ) { song ->
                                                 YouTubeListItem(
@@ -2418,6 +2434,7 @@ fun HomeScreen(
                                 } else {
                                     // Render mixed content as horizontal grid items (albums, playlists, artists, etc.)
                                     item(key = "home_section_list_${section.index}") {
+                                        val dedupedSectionDataItems = remember(sectionData.items) { sectionData.items.distinctBy { it.id } }
                                         LazyRow(
                                             contentPadding =
                                                 WindowInsets.systemBars
@@ -2425,7 +2442,7 @@ fun HomeScreen(
                                                     .asPaddingValues(),
                                         ) {
                                             items(
-                                                items = sectionData.items.distinctBy { it.id },
+                                                items = dedupedSectionDataItems,
                                                 key = { "home_section_${section.index}_item_${it.id}" },
                                             ) { item ->
                                                 ytGridItem(item)
@@ -2451,6 +2468,7 @@ fun HomeScreen(
                                     )
                                 }
                                 item(key = "mood_and_genres_list") {
+                                    val dedupedMoodAndGenres = remember(moodAndGenres) { moodAndGenres.distinctBy { "${it.title}_${it.endpoint.browseId}_${it.endpoint.params}" } }
                                     LazyHorizontalGrid(
                                         rows = GridCells.Fixed(4),
                                         contentPadding = PaddingValues(6.dp),
@@ -2458,7 +2476,7 @@ fun HomeScreen(
                                             Modifier
                                                 .height((MoodAndGenresButtonHeight + 12.dp) * 4 + 12.dp),
                                     ) {
-                                        items(moodAndGenres.distinctBy { "${it.title}_${it.endpoint.browseId}_${it.endpoint.params}" }, key = { "${it.title}_${it.endpoint.browseId}_${it.endpoint.params}" }) {
+                                        items(dedupedMoodAndGenres, key = { "${it.title}_${it.endpoint.browseId}_${it.endpoint.params}" }) {
                                             MoodAndGenresButton(
                                                 title = it.title,
                                                 onClick = {

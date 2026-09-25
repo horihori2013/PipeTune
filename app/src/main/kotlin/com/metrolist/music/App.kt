@@ -35,6 +35,7 @@ import com.metrolist.music.extensions.toInetSocketAddress
 import com.metrolist.music.utils.CrashHandler
 import com.metrolist.music.utils.ArtistNameAliases
 import com.metrolist.music.utils.InnerTubeXPlayer
+import com.metrolist.music.utils.WireGuardManager
 import com.metrolist.music.utils.dataStore
 import com.metrolist.music.utils.safeDataStoreEdit
 import com.metrolist.music.utils.reportException
@@ -180,6 +181,21 @@ class App :
         }
 
         YouTube.useLoginForBrowse = settings[UseLoginForBrowse] ?: true
+
+        // Initialize WireGuard userspace proxy if auto-connect is enabled
+        if (settings[WireGuardEnabledKey] == true && settings[WireGuardAutoConnectKey] == true) {
+            val configContent = settings[WireGuardConfigContentKey].orEmpty()
+            val configName = settings[WireGuardConfigNameKey].orEmpty()
+            if (configContent.isNotBlank()) {
+                try {
+                    WireGuardManager.start(this, configName.ifBlank { "WireGuard" }, configContent)
+                    Timber.d("WireGuard proxy auto-connected")
+                } catch (e: Exception) {
+                    Timber.e(e, "Failed to auto-connect WireGuard proxy")
+                    reportException(e)
+                }
+            }
+        }
 
         val channel =
             NotificationChannel(

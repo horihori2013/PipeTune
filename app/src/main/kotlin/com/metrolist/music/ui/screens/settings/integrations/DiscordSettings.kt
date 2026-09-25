@@ -40,8 +40,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
+
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -103,6 +102,7 @@ import com.metrolist.music.ui.component.DefaultDialog
 import com.metrolist.music.ui.component.IconButton
 import com.metrolist.music.ui.component.Material3SettingsGroup
 import com.metrolist.music.ui.component.Material3SettingsItem
+import com.metrolist.music.ui.component.Material3SettingsToggle
 import com.metrolist.music.ui.utils.backToMain
 import com.metrolist.music.utils.dataStore
 import com.metrolist.music.utils.makeTimeString
@@ -494,56 +494,21 @@ fun DiscordSettings(
             title = stringResource(R.string.options),
             items =
                 listOf(
-                    Material3SettingsItem(
-                        title = { Text(stringResource(R.string.enable_discord_rpc)) },
-                        trailingContent = {
-                            Switch(
-                                checked = discordRPC,
-                                onCheckedChange = onDiscordRPCChange,
-                                enabled = isLoggedIn,
-                                thumbContent = {
-                                    Icon(
-                                        painter = painterResource(
-                                            id = if (discordRPC) R.drawable.check else R.drawable.close
-                                        ),
-                                        contentDescription = null,
-                                        modifier = Modifier.size(SwitchDefaults.IconSize),
-                                    )
-                                }
-                            )
-                        },
+                    Material3SettingsToggle(
+                        title = stringResource(R.string.enable_discord_rpc),
+                        checked = discordRPC,
+                        onCheckedChange = onDiscordRPCChange,
                         enabled = isLoggedIn,
-                        onClick = { if (isLoggedIn) onDiscordRPCChange(!discordRPC) },
                     ),
-                    Material3SettingsItem(
-                        title = { Text(stringResource(R.string.discord_advanced_mode)) },
-                        description = { Text(stringResource(R.string.discord_advanced_mode_description)) },
-                        trailingContent = {
-                            Switch(
-                                checked = advancedMode,
-                                onCheckedChange = {
-                                    onAdvancedModeChange(it)
-                                    onPrefChanged()
-                                },
-                                enabled = isLoggedIn,
-                                thumbContent = {
-                                    Icon(
-                                        painter = painterResource(
-                                            id = if (advancedMode) R.drawable.check else R.drawable.close
-                                        ),
-                                        contentDescription = null,
-                                        modifier = Modifier.size(SwitchDefaults.IconSize),
-                                    )
-                                },
-                            )
+                    Material3SettingsToggle(
+                        title = stringResource(R.string.discord_advanced_mode),
+                        description = stringResource(R.string.discord_advanced_mode_description),
+                        checked = advancedMode,
+                        onCheckedChange = {
+                            onAdvancedModeChange(it)
+                            onPrefChanged()
                         },
                         enabled = isLoggedIn,
-                        onClick = {
-                            if (isLoggedIn) {
-                                onAdvancedModeChange(!advancedMode)
-                                onPrefChanged()
-                            }
-                        },
                     ),
                 ),
         )
@@ -590,28 +555,11 @@ fun DiscordSettings(
                     items =
                         buildList {
                             add(
-                                Material3SettingsItem(
-                                    title = { Text(stringResource(R.string.discord_enable_button_1)) },
-                                    trailingContent = {
-                                        Switch(
-                                            checked = btn1Enabled,
-                                            onCheckedChange = {
-                                                onBtn1EnabledChange(it)
-                                                onPrefChanged()
-                                            },
-                                            thumbContent = {
-                                                Icon(
-                                                    painter = painterResource(
-                                                        id = if (btn1Enabled) R.drawable.check else R.drawable.close
-                                                    ),
-                                                    contentDescription = null,
-                                                    modifier = Modifier.size(SwitchDefaults.IconSize),
-                                                )
-                                            },
-                                        )
-                                    },
-                                    onClick = {
-                                        onBtn1EnabledChange(!btn1Enabled)
+                                Material3SettingsToggle(
+                                    title = stringResource(R.string.discord_enable_button_1),
+                                    checked = btn1Enabled,
+                                    onCheckedChange = {
+                                        onBtn1EnabledChange(it)
                                         onPrefChanged()
                                     },
                                 ),
@@ -633,28 +581,11 @@ fun DiscordSettings(
                                 )
                             }
                             add(
-                                Material3SettingsItem(
-                                    title = { Text(stringResource(R.string.discord_enable_button_2)) },
-                                    trailingContent = {
-                                        Switch(
-                                            checked = btn2Enabled,
-                                            onCheckedChange = {
-                                                onBtn2EnabledChange(it)
-                                                onPrefChanged()
-                                            },
-                                            thumbContent = {
-                                                Icon(
-                                                    painter = painterResource(
-                                                        id = if (btn2Enabled) R.drawable.check else R.drawable.close
-                                                    ),
-                                                    contentDescription = null,
-                                                    modifier = Modifier.size(SwitchDefaults.IconSize),
-                                                )
-                                            },
-                                        )
-                                    },
-                                    onClick = {
-                                        onBtn2EnabledChange(!btn2Enabled)
+                                Material3SettingsToggle(
+                                    title = stringResource(R.string.discord_enable_button_2),
+                                    checked = btn2Enabled,
+                                    onCheckedChange = {
+                                        onBtn2EnabledChange(it)
                                         onPrefChanged()
                                     },
                                 ),
