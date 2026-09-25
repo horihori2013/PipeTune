@@ -1,48 +1,36 @@
 <div align="center">
 
-<img src="fastlane/metadata/android/en-US/images/icon.png" alt="Metrolist app icon" width="200" />
+<img src="fastlane/metadata/android/en-US/images/icon.png" alt="PipeTune app icon" width="200" />
 
-# Metrolist
+# PipeTune
 
-### YouTube Music client for Android
-
-<br/>
-
-<a href="https://www.blacksmith.sh">
-  <img src="assets/blacksmith-powered.png" alt="CI powered by Blacksmith" width="280" />
-</a>
-
-<br/>
-<br/>
-
-[![Latest release](https://img.shields.io/github/v/release/MetrolistGroup/Metrolist?style=for-the-badge&labelColor=0d1117)](https://github.com/MetrolistGroup/Metrolist/releases)
-[![License](https://img.shields.io/github/license/MetrolistGroup/metrolist?style=for-the-badge&labelColor=0d1117)](https://github.com/MetrolistGroup/Metrolist/blob/main/LICENSE)
-[![Downloads](https://img.shields.io/github/downloads/MetrolistGroup/Metrolist/total?style=for-the-badge&labelColor=0d1117)](https://github.com/MetrolistGroup/Metrolist/releases)
+### YouTube Music client for Android — Metrolist フォーク / A fork of Metrolist
 
 <br/>
 
-[![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white&labelColor=0d1117)](https://dsc.gg/metrolist)
-[![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white&labelColor=0d1117)](https://t.me/metrolistapp)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg?style=for-the-badge&labelColor=0d1117)](LICENSE)
+[![Fork of Metrolist](https://img.shields.io/badge/fork%20of-Metrolist-181717?style=for-the-badge&labelColor=0d1117)](https://github.com/MetrolistGroup/Metrolist)
+[![Platform: Android](https://img.shields.io/badge/Platform-Android-3DDC84?style=for-the-badge&labelColor=0d1117)](https://www.android.com)
 
 <br/>
 
-[**Download**](#download-now) · [**Features**](#features) · [**Translate**](#translations) · [**FAQ**](#faq) · [**Support**](#support-the-project)
+[**日本語**](#日本語) · [**English**](#english)
 
 </div>
 
-> [!WARNING]
-> # MAINTENANCE MODE
-> Metrolist is currently in maintenance mode. This means we will only be fixing bugs and making minor improvements. Please do not submit PRs for new features or major changes, as they will not be accepted.  
-> The app is **NOT** dead, please stay tuned for updates on our discord (found above).
+> [!IMPORTANT]
+> PipeTune は [Metrolist](https://github.com/MetrolistGroup/Metrolist) の個人的なフォークです。上流プロジェクトとは独立して開発・動作します。
+> PipeTune is a personal fork of [Metrolist](https://github.com/MetrolistGroup/Metrolist) and is developed independently from the upstream project.
 
 > [!WARNING]
-> **Regional Restriction** - If YouTube Music is unavailable in your region, this app will not work without a **VPN or proxy** connecting to a supported region.
+> **地域制限** — YouTube Music が利用できない地域では、対応地域に接続する **VPN またはプロキシ** が必要です。
+> **Regional restriction** — If YouTube Music is unavailable in your region, a **VPN or proxy** connected to a supported region is required.
 
 ---
 
 <div align="center">
 
-<h1><a id="screenshots"></a>Screenshots</h1>
+### Screenshots / スクリーンショット
 
 <img src="fastlane/metadata/android/en-US/images/screenshots/screenshot_1.png" alt="Home screen" width="30%" />
 <img src="fastlane/metadata/android/en-US/images/screenshots/screenshot_2.png" alt="Artist screen" width="30%" />
@@ -55,9 +43,147 @@
 
 ---
 
-<div align="center">
+## 日本語
 
-<h1><a id="features"></a>Features</h1>
+### 概要
+
+PipeTune は YouTube Music クライアント **Metrolist** をベースにした個人フォークです。
+
+- applicationId: `io.github.horihori2013.pipetune`
+- ライセンス: [GPL-3.0](LICENSE)
+
+### PipeTune での主な変更点
+
+- **ライキッドガラス風 UI** — 同梱の AndroidLiquidGlass をベースに、ナビゲーションバーやトグルに透明感のあるガラス質感を適用
+- **横画面・タブレット対応レイアウト** — 横画面では左レール＋半幅ミニプレイヤー、縦画面タブレットでは全幅ナビゲーションなど、画面モードごとに最適な配置
+- **ミニプレイヤーとナビゲーションの位置調整** — 高さ・余白を統一し、隙間なくスムーズに連続する配置に
+- **全言語でウクライナ支持メッセージに対応** — About ページのメッセージを 28 ロケールすべてで更新
+
+### 機能
+
+<table>
+  <tr>
+    <td width="50%" valign="top">
+
+#### 再生
+- YouTube Music の楽曲・動画をストリーミング
+- バックグラウンド再生
+- オフライン再生用のダウンロード・キャッシュ
+- 無音区間のスキップ
+- スリープタイマー
+
+</td>
+    <td width="50%" valign="top">
+
+#### 音声
+- 音量正規化
+- テンポ・ピッチ制御
+- イコライザー
+- クロスフェード
+
+</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+
+#### 歌詞・発見
+- ライブ同期歌詞
+- AI による歌詞翻訳
+- パーソナライズされたクイックピック
+- 楽曲・アルバム・アーティスト・動画・プレイリストを検索
+
+</td>
+    <td width="50%" valign="top">
+
+#### ライブラリ・アカウント
+- ライブラリ管理
+- ローカルプレイリスト
+- プレイリストのインポート
+- プレイリスト・キューの並べ替え
+- YouTube Music アカウントにログイン
+- お気に入り・アーティスト・アルバム・プレイリストの同期
+
+</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+
+#### ソーシャル
+- フレンドとリアルタイムで同時再生（Listen Together）
+- Last.fm スクローブリング
+- Discord Rich Presence
+
+</td>
+    <td width="50%" valign="top">
+
+#### インターフェース
+- ホーム画面ウィジェット
+- ライト / ダーク / ブラック / ダイナミックテーマ
+- ダイナミックカラー ＋ 19 種のプリセットカラー
+- Material 3
+- ライキッドガラス風ナビゲーション（PipeTune）
+
+</td>
+  </tr>
+</table>
+
+### ビルド方法
+
+要件: **JDK 21** / Android SDK
+
+フレーバー: `foss`（デフォルト）/ `gms` / `izzy`
+
+```bash
+git clone https://github.com/horihori2013/PipeTune.git
+cd PipeTune
+./gradlew :app:assembleFossDebug
+```
+
+Windows の場合:
+
+```powershell
+.\gradlew.bat :app:assembleFossDebug
+```
+
+生成された APK:
+
+```text
+app/build/outputs/apk/universalFoss/debug/app-universal-foss-debug.apk
+```
+
+### クレジット
+
+- 本プロジェクトは [Metrolist](https://github.com/MetrolistGroup/Metrolist)（作者: [Mo Agamy](https://github.com/mostafaalagamy)）のフォークです
+- 上流コミュニティ: [Discord](https://dsc.gg/metrolist) / [Telegram](https://t.me/metrolistapp)
+- 翻訳は上流の [Weblate](https://hosted.weblate.org/engage/metrolist/) から継承しています
+- 主なインスピレーション: **[InnerTune](https://github.com/z-huang)** / **[OuterTune](https://github.com/DD3Boh)**
+- ライブラリ & 連携: [Better Lyrics](https://better-lyrics.boidu.dev) · [metroserver](https://github.com/MetrolistGroup/metroserver) · [MusicRecognizer](https://github.com/aleksey-saenko/MusicRecognizer) · [zemer-cipher](https://github.com/ZemerTeam/zemer-cipher)
+
+### 免責事項
+
+本プロジェクトは YouTube、Google LLC、Metrolist Group LLC、またはそれらの関連会社・子会社とは **一切関係なく、資金提供・承認・推奨も受けていません**。
+
+本プロジェクト内で言及されるすべての商標、サービスマーク、知的財産権はそれぞれの権利者に帰属します。
+
+---
+
+## English
+
+### About
+
+PipeTune is a personal fork of **[Metrolist](https://github.com/MetrolistGroup/Metrolist)**, a YouTube Music client for Android.
+
+- applicationId: `io.github.horihori2013.pipetune`
+- License: [GPL-3.0](LICENSE)
+
+### What's changed in PipeTune
+
+- **Liquid glass UI** — glass-styled navigation bar and toggles, powered by the bundled AndroidLiquidGlass library
+- **Landscape & tablet layouts** — side rail with a half-width mini player in landscape, full-width bottom navigation on portrait tablets, and more
+- **Mini player / navigation alignment** — unified heights and spacing for a seamless, gap-free layout
+- **Ukraine message in every language** — the About page message has been updated across all 28 locales
+
+### Features
 
 <table>
   <tr>
@@ -119,231 +245,60 @@
 - Light / Dark / Black / Dynamic theme modes
 - Dynamic color + 19 preset color palettes
 - Built with Material 3
+- Liquid glass navigation (PipeTune)
 
 </td>
   </tr>
 </table>
 
-</div>
+### Building
 
----
+Requirements: **JDK 21** / Android SDK
 
-<div align="center">
+Flavors: `foss` (default) / `gms` / `izzy`
 
-<h1><a id="download-now"></a>Download Now</h1>
-
-<h2>Stable Release</h2>
-
-<table>
-  <tr>
-    <th align="center">Obtainium</th>
-    <th align="center">IzzyOnDroid</th>
-  </tr>
-  <tr>
-    <td align="center">
-      <a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/MetrolistGroup/Metrolist/">
-        <img src="assets/badges/obtainium.svg" alt="Add Metrolist to Obtainium" height="100">
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://apt.izzysoft.de/fdroid/index/apk/com.metrolist.music">
-        <img src="assets/badges/izzyondroid.svg" alt="Get Metrolist on IzzyOnDroid" height="100">
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <th align="center">OpenAPK</th>
-    <th align="center">GitHub</th>
-  </tr>
-  <tr>
-    <td align="center">
-      <a href="https://www.openapk.net/metrolist/com.metrolist.music/">
-        <img src="assets/badges/openapk.svg" alt="Get Metrolist on OpenAPK" height="100">
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/MetrolistGroup/Metrolist/releases/latest/download/Metrolist.apk">
-        <img src="assets/badges/github-stable.svg" alt="Get the stable Metrolist release on GitHub" height="100">
-      </a>
-    </td>
-  </tr>
-</table>
-
-<h2>Nightly Build</h2>
-
-<table>
-  <tr>
-    <th align="center">GitHub</th>
-  </tr>
-  <tr>
-    <td align="center">
-      <a href="https://github.com/MetrolistGroup/Metrolist/releases/download/nightly/Metrolist-with-Google-Cast.apk">
-        <img src="assets/badges/github-nightly.svg" alt="Get the Metrolist nightly build on GitHub" height="120">
-      </a>
-    </td>
-  </tr>
-</table>
-
-</div>
-
----
-
-<div align="center">
-
-<h1><a id="faq"></a>FAQ</h1>
-
-<h3>Got questions? Check out our <a href="https://metrolist.cc/#faq">FAQ page</a> for answers to the most common ones.</h3>
-
-</div>
-
----
-
-<div align="center">
-
-<h1><a id="translations"></a>Translations</h1>
-
-[![Translation status](https://img.shields.io/weblate/progress/metrolist?style=for-the-badge&labelColor=0d1117)](https://hosted.weblate.org/engage/metrolist/)
-
-<h3>We use Weblate to translate Metrolist. <a href="https://hosted.weblate.org/projects/Metrolist/">Help us bring Metrolist to more people!</a></h3>
-
-<a href="https://hosted.weblate.org/projects/Metrolist/">
-  <img src="https://hosted.weblate.org/widget/Metrolist/horizontal-auto.svg" alt="Translation status" />
-</a>
-
-<h3>Thank you! Every translation makes Metrolist a little more accessible to someone, somewhere in the world.</h3>
-
-</div>
-
----
-
-<div align="center">
-
-<h1><a id="support-the-project"></a>Support the Project</h1>
-
-<h3>Metrolist is free and open-source. If it brings you joy, consider supporting its development!</h3>
-
-#### Monero (XMR)
-
-<img src="assets/XMR.png" alt="Monero QR code" width="150" />
-
-```text
-44XjSELSWcgJTZiCKzjpCQWyXhokrH9RqH3rpp35FkSKi57T25hniHWHQNhLeXyFn3DDYqufmfRB1iEtENerZpJc7xJCcqt
+```bash
+git clone https://github.com/horihori2013/PipeTune.git
+cd PipeTune
+./gradlew :app:assembleFossDebug
 ```
 
-#### Buy Me a Coffee
+On Windows:
 
-<a href="https://www.buymeacoffee.com/mostafaalagamy">
-  <img src="assets/buymeacoffee.png" alt="Buy Me a Coffee" width="150" />
-</a>
+```powershell
+.\gradlew.bat :app:assembleFossDebug
+```
 
-</div>
+Output APK:
 
----
+```text
+app/build/outputs/apk/universalFoss/debug/app-universal-foss-debug.apk
+```
 
-<div align="center">
+### Credits
 
-<h1>Special Thanks</h1>
+- This project is a fork of [Metrolist](https://github.com/MetrolistGroup/Metrolist) by [Mo Agamy](https://github.com/mostafaalagamy)
+- Upstream community: [Discord](https://dsc.gg/metrolist) / [Telegram](https://t.me/metrolistapp)
+- Translations are inherited from upstream [Weblate](https://hosted.weblate.org/engage/metrolist/)
+- Main inspirations: **[InnerTune](https://github.com/z-huang)** / **[OuterTune](https://github.com/DD3Boh)**
+- Libraries & integrations: [Better Lyrics](https://better-lyrics.boidu.dev) · [metroserver](https://github.com/MetrolistGroup/metroserver) · [MusicRecognizer](https://github.com/aleksey-saenko/MusicRecognizer) · [zemer-cipher](https://github.com/ZemerTeam/zemer-cipher)
 
-<h3>Metrolist stands on the shoulders of incredible open-source work.</h3>
-
-<h3>Main Inspirations</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th align="center">Project</th>
-      <th align="center">Authors</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td align="center"><strong>InnerTune</strong></td>
-      <td align="center"><a href="https://github.com/z-huang">Zion Huang</a> · <a href="https://github.com/Malopieds">Malopieds</a></td>
-    </tr>
-    <tr>
-      <td align="center"><strong>OuterTune</strong></td>
-      <td align="center"><a href="https://github.com/DD3Boh">Davide Garberi</a> · <a href="https://github.com/mikooomich">Michael Zh</a></td>
-    </tr>
-  </tbody>
-</table>
-
-<h3>Libraries & Integrations</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th align="center">Project</th>
-      <th align="center">Contribution</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td align="center"><a href="https://better-lyrics.boidu.dev"><strong>Better Lyrics</strong></a></td>
-      <td>Time-synced lyrics with word-by-word highlighting & YouTube Music integration</td>
-    </tr>
-    <tr>
-      <td align="center"><a href="https://github.com/MetrolistGroup/metroserver"><strong>metroserver</strong></a></td>
-      <td>Listen-together real-time backend</td>
-    </tr>
-    <tr>
-      <td align="center"><a href="https://github.com/aleksey-saenko/MusicRecognizer"><strong>MusicRecognizer</strong></a></td>
-      <td>Music recognition feature & Shazam API integration</td>
-    </tr>
-    <tr>
-      <td align="center"><a href="https://github.com/ZemerTeam/zemer-cipher"><strong>zemer-cipher</strong></a></td>
-      <td>YouTube cipher deobfuscation and PoToken generation</td>
-    </tr>
-    <tr>
-      <td align="center"><a href="https://www.blacksmith.sh"><strong>Blacksmith</strong></a></td>
-      <td>High-performance GitHub Actions runners powering our CI</td>
-    </tr>
-  </tbody>
-</table>
-
-<br/>
-
-<a href="https://www.blacksmith.sh">
-  <img src="assets/blacksmith-powered.png" alt="CI powered by Blacksmith" width="280" />
-</a>
-
-<h3>We also thank the entire open-source community! For every library, tool, and API that powers this project.</h3>
-
-</div>
-
----
-
-<div align="center">
-
-<h1>Contributors</h1>
-
-<h3>This project wouldn't exist without these amazing people!</h3>
-
-<a href="https://github.com/MetrolistGroup/Metrolist/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=MetrolistGroup/Metrolist" alt="Contributors" />
-</a>
-
-</div>
-
----
-
-<div align="center">
-
-<h1>Disclaimer</h1>
+### Disclaimer
 
 This project is **not affiliated with, funded, authorized, endorsed by, or in any way associated** with YouTube, Google LLC, Metrolist Group LLC, or any of their affiliates and subsidiaries.
 
 All trademarks, service marks, and intellectual property rights referenced in this project belong to their respective owners.
 
-</div>
-
 ---
 
 <div align="center">
 
 <br/>
 
-**Made with ❤️ by [Mo Agamy](https://github.com/mostafaalagamy)**
+**This project stands with Ukraine 🇺🇦**
 
-**This project stands with Palestine 🇵🇸**
+<br/>
+
+PipeTune is a fork of [Metrolist](https://github.com/MetrolistGroup/Metrolist) · Original project by [Mo Agamy](https://github.com/mostafaalagamy)
 
 </div>
