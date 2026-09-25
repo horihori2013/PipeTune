@@ -96,7 +96,6 @@
     <string name="follow_theme">Follow theme</string>
     <string name="gradient">Gradient</string>
     <string name="new_player_design">New player design</string>
-    <string name="new_mini_player_design">New mini-player design</string>
     <string name="player_background_blur">Blur</string>
     <string name="player_buttons_style">Player button colors</string>
     <string name="default_style">Default</string>
@@ -204,6 +203,22 @@
     <string name="proxy_username">Proxy username</string>
     <string name="proxy_password">Proxy password</string>
     <string name="enable_authentication">Enable authentication</string>
+
+    <!-- WireGuard VPN -->
+    <string name="wireguard">WireGuard VPN</string>
+    <string name="wireguard_desc">Route app traffic through a WireGuard VPN tunnel</string>
+    <string name="enable_wireguard">Enable WireGuard</string>
+    <string name="import_wireguard_config">Import WireGuard config</string>
+    <string name="wireguard_config_imported">WireGuard config imported</string>
+    <string name="wireguard_config_error">Failed to parse WireGuard config</string>
+    <string name="wireguard_connect">Connect</string>
+    <string name="wireguard_disconnect">Disconnect</string>
+    <string name="wireguard_connected">WireGuard connected</string>
+    <string name="wireguard_disconnected">WireGuard disconnected</string>
+    <string name="wireguard_config_name">Config name</string>
+    <string name="wireguard_no_config">No WireGuard config imported</string>
+    <string name="wireguard_auto_connect">Auto-connect on startup</string>
+    <string name="wireguard_remove_config">Remove config</string>
 
 
     <string name="auto_radio_queue">Auto radio queue</string>
@@ -438,7 +453,6 @@
     <string name="mini_player">Mini-player</string>
     <string name="mini_player_background_style">Mini-player background style</string>
     <string name="transparent">Transparent</string>
-    <string name="mini_player_background_not_available">Unavailable when the new mini-player design is disabled</string>
     <string name="cache_size_warning_title">Hold on!</string>
     <string name="cache_size_warning_message">The limit you\'ve chosen (%1$s) is smaller than what the app is currently using. Continuing may cause some cached %2$s to be removed. Proceed anyway?</string>
     <string name="cache_size_warning_confirm">Continue</string>
@@ -860,7 +874,7 @@
     <string name="metrolist">METROLIST</string>
     <string name="wanna_play_favorite_song">Want to play their favorite song?</string>
     <string name="yeah">Yeah!</string>
-    <string name="stands_with_palestine">This project stands with Palestine 🇵🇸</string>
+    <string name="stands_with_palestine">This project stands with Ukraine 🇺🇦</string>
 
     <!-- Podcasts -->
     <string name="filter_podcasts">Podcasts</string>
