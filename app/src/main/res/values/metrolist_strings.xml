@@ -204,6 +204,11 @@
     <string name="proxy_password">Proxy password</string>
     <string name="enable_authentication">Enable authentication</string>
 
+    <!-- Network -->
+    <string name="network">Network</string>
+    <string name="always_use_mobile_data">Always use mobile data</string>
+    <string name="always_use_mobile_data_desc">Send all of the app\'s traffic over mobile data even when Wi-Fi is available. May increase battery usage and consume mobile data.</string>
+
     <!-- WireGuard VPN -->
     <string name="wireguard">WireGuard VPN</string>
     <string name="wireguard_desc">Route app traffic through a WireGuard VPN tunnel</string>

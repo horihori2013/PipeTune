@@ -841,4 +841,7 @@
     <string name="stream_source_android_vr_desc">Android VRクライアント（全バージョン）。</string>
     <string name="stream_source_web_creator">WEB_CREATOR</string>
     <string name="stream_source_web_creator_desc">クリエーター向けウェブクライアント。</string>
+    <string name="network">ネットワーク</string>
+    <string name="always_use_mobile_data">モバイルデータを常に使用</string>
+    <string name="always_use_mobile_data_desc">Wi-Fiが利用できる場合でも、アプリの通信を常にモバイルデータで送信します。バッテリー消費とモバイルデータ使用量が増える場合があります。</string>
 </resources>

@@ -55,6 +55,7 @@ import com.metrolist.music.LocalPlayerAwareWindowInsets
 import com.metrolist.music.R
 import com.metrolist.music.constants.AddToPlaylistPosition
 import com.metrolist.music.constants.AddToPlaylistPositionKey
+import com.metrolist.music.constants.AlwaysUseMobileDataKey
 import com.metrolist.music.constants.AppLanguageKey
 import com.metrolist.music.constants.ContentCountryKey
 import com.metrolist.music.constants.ContentLanguageKey
@@ -122,6 +123,8 @@ fun ContentSettings(
     val (proxyUrl, onProxyUrlChange) = rememberPreference(key = ProxyUrlKey, defaultValue = "host:port")
     val (proxyUsername, onProxyUsernameChange) = rememberPreference(key = ProxyUsernameKey, defaultValue = "username")
     val (proxyPassword, onProxyPasswordChange) = rememberPreference(key = ProxyPasswordKey, defaultValue = "password")
+    val (alwaysUseMobileData, onAlwaysUseMobileDataChange) =
+        rememberPreference(key = AlwaysUseMobileDataKey, defaultValue = false)
     val (enableZemer, onEnableZemerChange) = rememberPreference(key = EnableZemerKey, defaultValue = true)
     val (enableKugou, onEnableKugouChange) = rememberPreference(key = EnableKugouKey, defaultValue = true)
     val (enableLrclib, onEnableLrclibChange) = rememberPreference(key = EnableLrcLibKey, defaultValue = true)
@@ -848,6 +851,21 @@ fun ContentSettings(
                     description = { Text(stringResource(R.string.wireguard_desc)) },
                     onClick = { navController.navigate("settings/content/wireguard") }
                 ),
+            )
+        )
+
+        Spacer(modifier = Modifier.height(27.dp))
+
+        Material3SettingsGroup(
+            title = stringResource(R.string.network),
+            items = listOf(
+                Material3SettingsToggle(
+                    icon = painterResource(R.drawable.wifi_proxy),
+                    title = stringResource(R.string.always_use_mobile_data),
+                    description = stringResource(R.string.always_use_mobile_data_desc),
+                    checked = alwaysUseMobileData,
+                    onCheckedChange = onAlwaysUseMobileDataChange,
+                )
             )
         )
 

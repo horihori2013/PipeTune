@@ -98,6 +98,9 @@ val ProxyTypeKey = stringPreferencesKey("proxyType")
 val ProxyUsernameKey = stringPreferencesKey("proxyUsername")
 val ProxyPasswordKey = stringPreferencesKey("proxyPassword")
 
+// Network
+val AlwaysUseMobileDataKey = booleanPreferencesKey("alwaysUseMobileData")
+
 // WireGuard VPN
 val WireGuardEnabledKey = booleanPreferencesKey("wireguardEnabled")
 val WireGuardConfigNameKey = stringPreferencesKey("wireguardConfigName")

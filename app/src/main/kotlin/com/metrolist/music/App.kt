@@ -35,6 +35,7 @@ import com.metrolist.music.extensions.toInetSocketAddress
 import com.metrolist.music.utils.CrashHandler
 import com.metrolist.music.utils.ArtistNameAliases
 import com.metrolist.music.utils.InnerTubeXPlayer
+import com.metrolist.music.utils.MobileDataNetwork
 import com.metrolist.music.utils.WireGuardManager
 import com.metrolist.music.utils.dataStore
 import com.metrolist.music.utils.safeDataStoreEdit
@@ -304,6 +305,15 @@ class App :
                                     ?: effectiveAppLocale.language.takeIf { it in LanguageCodeToName }
                                     ?: "en",
                         )
+                }
+        }
+
+        applicationScope.launch(Dispatchers.IO) {
+            dataStore.data
+                .map { it[AlwaysUseMobileDataKey] ?: false }
+                .distinctUntilChanged()
+                .collect { enabled ->
+                    MobileDataNetwork.setEnabled(this@App, enabled)
                 }
         }
     }
