@@ -291,6 +291,22 @@ All trademarks, service marks, and intellectual property rights referenced in th
 
 ---
 
+## Third-party licenses / サードパーティーライセンス
+
+| Project / プロジェクト | License / ライセンス | Usage / 使用箇所 |
+|---|---|---|
+| **[PipeTune](https://github.com/horihori2013/PipeTune)** (fork of Metrolist) | [GPL-3.0](LICENSE) | 本アプリ / this app |
+| **[AndroidLiquidGlass](https://github.com/Kyant0/AndroidLiquidGlass)** (Kyant0) — including its Backdrop module | [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0) | ガラス風ナビゲーション・トグルの UI / glass-style navigation & toggle UI. Backdrop のソースは `app/src/main/kotlin/com/kyant/backdrop/` に同梱（`LICENSE` ファイル付き） / Backdrop sources are vendored at `app/src/main/kotlin/com/kyant/backdrop/` with the `LICENSE` file included |
+| **[Shapes](https://github.com/Kyant0/Shapes)** — `io.github.kyant0:shapes` | [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0) | Gradle 依存 / Gradle dependency |
+| **[wireproxy-awg](https://github.com/wgtunnel/wireproxy-awg)** — `libwireproxy.so` | [ISC](https://github.com/wgtunnel/wireproxy-awg/blob/master/LICENSE) | WireGuard ユーザー空間プロキシ（SOCKS5）のネイティブライブラリ。`app/src/main/jniLibs/arm64-v8a/libwireproxy.so` に同梱（`*.so` は gitignore 対象のためリポジトリには未収録、ビルド時に APK へバンドル）。[amneziawg-go](https://github.com/amnezia-vpn/amneziawg-go)（MIT）と [go-socks5](https://github.com/things-go/go-socks5)（MIT）を静的リンク / native userspace WireGuard SOCKS5 proxy bundled at `app/src/main/jniLibs/arm64-v8a/libwireproxy.so` (gitignored, packaged into the APK); statically links amneziawg-go (MIT) and go-socks5 (MIT) |
+
+WireGuard 関連の Kotlin 実装（`WireGuardConfig.kt` / `WireGuardManager.kt` / `WireGuardNative.kt` / `WireGuardSettings.kt`）は本プロジェクト独自のコードで、[GPL-3.0](LICENSE) の下で提供されます。
+The WireGuard-related Kotlin sources are original work released under GPL-3.0.
+
+> WireGuard® は Jason A. Donenfeld の登録商標です。/ WireGuard is a registered trademark of Jason A. Donenfeld.
+
+---
+
 <div align="center">
 
 <br/>
